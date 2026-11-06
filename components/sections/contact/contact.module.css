@@ -1,0 +1,63 @@
+.contact {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  padding: 8rem 8%;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 90% 50%,
+      rgba(30, 64, 175, 0.12),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      #080f20 0%,
+      #0b1426 50%,
+      #080f20 100%
+    );
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  color: #64748b;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 900px) {
+  .contact {
+    padding: 7rem 6%;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact {
+    padding: 5rem 5%;
+  }
+
+  .footer {
+    margin-top: 3rem;
+  }
+}

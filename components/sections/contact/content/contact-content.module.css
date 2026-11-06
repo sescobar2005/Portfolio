@@ -1,0 +1,149 @@
+.content {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.introduction {
+  position: sticky;
+  top: 5rem;
+}
+
+.sectionLabel {
+  color: #22d3ee;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.25rem;
+  color: #f8fafc;
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.04em;
+}
+
+.title span {
+  color: #60a5fa;
+}
+
+.description {
+  max-width: 380px;
+  margin-top: 1.25rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.55);
+  text-decoration: none;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease;
+}
+
+.contactCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(96, 165, 250, 0.5);
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.iconContainer {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 12px;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.contactInfo {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.contactName {
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.contactDescription {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.contactValue {
+  overflow-wrap: anywhere;
+  color: #60a5fa;
+  font-size: 0.75rem;
+}
+
+.contactAction {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem;
+  color: #64748b;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  transition: color 0.3s ease;
+}
+
+.contactCard:hover .contactAction {
+  color: #22d3ee;
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .introduction {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .contactCard {
+    gap: 1rem;
+    padding: 1.15rem;
+  }
+
+  .contactAction span {
+    display: none;
+  }
+
+  .iconContainer {
+    width: 42px;
+    height: 42px;
+  }
+}
