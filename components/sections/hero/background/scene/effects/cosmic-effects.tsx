@@ -6,9 +6,9 @@ export default function CosmicEffects() {
   return (
     <EffectComposer>
       <Bloom
-        intensity={1.1}
-        luminanceThreshold={0.7}
-        luminanceSmoothing={0.25}
+        intensity={0.45}
+        luminanceThreshold={1.0}
+        luminanceSmoothing={0.05}
         mipmapBlur
       />
     </EffectComposer>

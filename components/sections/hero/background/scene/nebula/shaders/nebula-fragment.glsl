@@ -169,5 +169,8 @@ void main() {
 
     float alpha = density * edge * uOpacity;
 
-    gl_FragColor = vec4(color, alpha);
+    // HDR emission: only the nebula crosses the Bloom threshold.
+    vec3 hdrColor = color * 6.0;
+
+    gl_FragColor = vec4(hdrColor, alpha);
 }

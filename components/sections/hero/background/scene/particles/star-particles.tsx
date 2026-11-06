@@ -16,6 +16,61 @@ interface StarParticlesProps {
   phase: number;
 }
 
+const vertexShader = `
+  uniform float uTime;
+  uniform float uSpeed;
+  uniform float uOpacity;
+
+  attribute float aSize;
+  attribute float aAlpha;
+  attribute float aPhase;
+  attribute vec3 aColor;
+
+  varying float vAlpha;
+  varying vec3 vColor;
+
+  void main() {
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+
+    float twinkle = 0.88 + 0.12 * sin(
+      uTime * uSpeed + aPhase
+    );
+
+    vAlpha = aAlpha * uOpacity * twinkle;
+    vColor = aColor;
+
+    gl_Position = projectionMatrix * mvPosition;
+
+    gl_PointSize = aSize * (30.0 / max(1.0, -mvPosition.z));
+  }
+`;
+
+const fragmentShader = `
+  varying float vAlpha;
+  varying vec3 vColor;
+
+  void main() {
+    vec2 centeredUv = gl_PointCoord - 0.5;
+    float distanceToCenter = length(centeredUv);
+
+    float halo = 1.0 - smoothstep(0.08, 0.5, distanceToCenter);
+    float core = exp(-distanceToCenter * distanceToCenter * 42.0);
+
+    float alpha = (halo * 0.45 + core * 0.75) * vAlpha;
+
+    if (alpha < 0.01) discard;
+
+    gl_FragColor = vec4(vColor, alpha);
+  }
+`;
+
+const starColors = [
+  new THREE.Color('#ffffff'),
+  new THREE.Color('#dbeafe'),
+  new THREE.Color('#9ecbff'),
+  new THREE.Color('#b9f2ff'),
+];
+
 export default function StarParticles({
   position,
   scale,
@@ -27,75 +82,97 @@ export default function StarParticles({
   rotationSpeed,
   phase,
 }: StarParticlesProps) {
-  const material = useRef<THREE.ShaderMaterial>(null);
   const group = useRef<THREE.Group>(null);
+  const material = useRef<THREE.ShaderMaterial>(null);
 
   const geometry = useMemo(() => {
-    const result = new THREE.BufferGeometry();
+    const starGeometry = new THREE.BufferGeometry();
 
     const positions = new Float32Array(count * 3);
-    const phases = new Float32Array(count);
     const sizes = new Float32Array(count);
+    const alphas = new Float32Array(count);
+    const phases = new Float32Array(count);
+    const colors = new Float32Array(count * 3);
 
     for (let i = 0; i < count; i++) {
-      const index = i * 3;
+      positions[i * 3] = THREE.MathUtils.randFloatSpread(scale[0]);
+      positions[i * 3 + 1] = THREE.MathUtils.randFloatSpread(scale[1]);
+      positions[i * 3 + 2] = THREE.MathUtils.randFloatSpread(scale[2]);
 
-      positions[index] = THREE.MathUtils.randFloatSpread(scale[0]);
-      positions[index + 1] = THREE.MathUtils.randFloatSpread(scale[1]);
-      positions[index + 2] = THREE.MathUtils.randFloatSpread(scale[2]);
+      sizes[i] = size * THREE.MathUtils.randFloat(0.55, 1.45);
+
+      alphas[i] = THREE.MathUtils.randFloat(
+        0.55,
+        Math.min(1, 0.75 + noise * 0.15),
+      );
 
       phases[i] = Math.random() * Math.PI * 2;
 
-      sizes[i] = size * (
-        0.75 + Math.random() * 0.25 * noise
-      );
+      const color = starColors[
+        Math.floor(Math.random() * starColors.length)
+      ];
+
+      colors[i * 3] = color.r;
+      colors[i * 3 + 1] = color.g;
+      colors[i * 3 + 2] = color.b;
     }
 
-    result.setAttribute(
+    starGeometry.setAttribute(
       'position',
       new THREE.BufferAttribute(positions, 3),
     );
 
-    result.setAttribute(
-      'aPhase',
-      new THREE.BufferAttribute(phases, 1),
-    );
-
-    result.setAttribute(
+    starGeometry.setAttribute(
       'aSize',
       new THREE.BufferAttribute(sizes, 1),
     );
 
-    return result;
+    starGeometry.setAttribute(
+      'aAlpha',
+      new THREE.BufferAttribute(alphas, 1),
+    );
+
+    starGeometry.setAttribute(
+      'aPhase',
+      new THREE.BufferAttribute(phases, 1),
+    );
+
+    starGeometry.setAttribute(
+      'aColor',
+      new THREE.BufferAttribute(colors, 3),
+    );
+
+    return starGeometry;
   }, [count, scale, size, noise]);
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: { value: 0 },
+      uSpeed: { value: speed },
+      uOpacity: { value: opacity },
+    }),
+    [speed, opacity],
+  );
 
   useEffect(() => {
     return () => geometry.dispose();
   }, [geometry]);
 
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uOpacity: { value: opacity },
-      uSpeed: { value: speed },
-    }),
-    [opacity, speed],
-  );
-
   useFrame((state) => {
+    if (material.current) {
+      material.current.uniforms.uTime.value =
+        state.clock.elapsedTime;
+    }
+
+    if (!group.current) return;
+
     const time = state.clock.elapsedTime;
 
-    if (material.current) {
-      material.current.uniforms.uTime.value = time;
-    }
+    group.current.rotation.y =
+      Math.sin(time * 0.025 + phase) * rotationSpeed;
 
-    if (group.current) {
-      group.current.rotation.y =
-        Math.sin(time * 0.025 + phase) * rotationSpeed;
-
-      group.current.rotation.x =
-        Math.cos(time * 0.018 + phase) * rotationSpeed * 0.5;
-    }
+    group.current.rotation.x =
+      Math.cos(time * 0.018 + phase) * rotationSpeed * 0.5;
   });
 
   return (
@@ -103,73 +180,13 @@ export default function StarParticles({
       <points geometry={geometry}>
         <shaderMaterial
           ref={material}
+          vertexShader={vertexShader}
+          fragmentShader={fragmentShader}
           uniforms={uniforms}
           transparent
           depthWrite={false}
           blending={THREE.AdditiveBlending}
           toneMapped={false}
-          vertexShader={`
-            uniform float uTime;
-            uniform float uSpeed;
-
-            attribute float aPhase;
-            attribute float aSize;
-
-            varying float vTwinkle;
-
-            void main() {
-              vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-
-              gl_Position = projectionMatrix * mvPosition;
-
-              float twinkle = sin(
-                uTime * uSpeed * 0.7 + aPhase
-              );
-
-              vTwinkle = 0.94 + twinkle * 0.06;
-
-              gl_PointSize = clamp(
-                aSize * (30.0 / -mvPosition.z),
-                1.0,
-                9.0
-              );
-            }
-          `}
-          fragmentShader={`
-            uniform float uOpacity;
-
-            varying float vTwinkle;
-
-            void main() {
-              vec2 uv = gl_PointCoord - 0.5;
-
-              float distanceToCenter = length(uv);
-
-              float core = 1.0 - smoothstep(
-                0.0,
-                0.16,
-                distanceToCenter
-              );
-
-              float halo = 1.0 - smoothstep(
-                0.05,
-                0.5,
-                distanceToCenter
-              );
-
-              float alpha = (
-                core * 0.35 + halo * 0.65
-              ) * uOpacity * vTwinkle;
-
-              vec3 color = mix(
-                vec3(0.38, 0.52, 0.85),
-                vec3(0.86, 0.93, 1.0),
-                core
-              );
-
-              gl_FragColor = vec4(color, alpha);
-            }
-          `}
         />
       </points>
     </group>
