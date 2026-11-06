@@ -1,0 +1,290 @@
+/* PROJECT GRID */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+/* PROJECT CARD */
+
+.card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-height: 320px;
+  padding: 1.75rem;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 12px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(30, 41, 59, 0.45),
+    rgba(15, 23, 42, 0.35)
+  );
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    border-color 250ms ease,
+    background 250ms ease,
+    transform 250ms ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(96, 165, 250, 0.4);
+
+  background: linear-gradient(
+    145deg,
+    rgba(30, 41, 59, 0.65),
+    rgba(15, 23, 42, 0.5)
+  );
+}
+
+.featured {
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+/* CARD HEADER */
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 2.5rem;
+}
+
+.projectNumber {
+  color: #60a5fa;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.status {
+  padding: 0.4rem 0.65rem;
+
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
+
+  color: #94a3b8;
+
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+}
+
+/* CARD CONTENT */
+
+.cardContent {
+  flex: 1;
+}
+
+.category {
+  margin-bottom: 0.75rem;
+
+  color: #64748b;
+
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.projectName {
+  margin-bottom: 0.85rem;
+
+  color: #f8fafc;
+
+  font-size: 1.6rem;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+}
+
+.description {
+  max-width: 500px;
+
+  color: #94a3b8;
+
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* CARD FOOTER */
+
+.cardFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.technology {
+  padding: 0.4rem 0.6rem;
+
+  border: 1px solid rgba(96, 165, 250, 0.18);
+  border-radius: 4px;
+
+  background: rgba(59, 130, 246, 0.07);
+
+  color: #bfdbfe;
+
+  font-size: 0.7rem;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.links a {
+  color: #67e8f9;
+
+  font-size: 0.8rem;
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition: color 200ms ease;
+}
+
+.links a:hover {
+  color: #bae6fd;
+}
+
+/* EMPTY STATE */
+
+.emptyState {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 350px;
+  padding: 3rem 1.5rem;
+
+  overflow: hidden;
+
+  border: 1px dashed rgba(96, 165, 250, 0.2);
+  border-radius: 12px;
+
+  background: rgba(15, 23, 42, 0.25);
+
+  text-align: center;
+}
+
+.emptyIcon {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  margin-bottom: 1.75rem;
+}
+
+.emptyIcon span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #22d3ee;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
+}
+
+.emptyIcon span:nth-child(2) {
+  opacity: 0.5;
+}
+
+.emptyIcon span:nth-child(3) {
+  opacity: 0.2;
+}
+
+.emptyCode {
+  margin-bottom: 1rem;
+
+  color: #60a5fa;
+
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.emptyTitle {
+  margin-bottom: 0.75rem;
+
+  color: #e2e8f0;
+
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.emptyDescription {
+  max-width: 500px;
+
+  color: #94a3b8;
+
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.emptyStatus {
+  margin-top: 2rem;
+
+  color: #64748b;
+
+  font-size: 0.65rem;
+  letter-spacing: 0.13em;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    min-height: auto;
+    padding: 1.35rem;
+  }
+
+  .cardHeader {
+    margin-bottom: 2rem;
+  }
+
+  .emptyState {
+    min-height: 320px;
+    padding: 2rem 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .links a {
+    transition: none;
+  }
+}
