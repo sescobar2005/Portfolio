@@ -2,9 +2,9 @@ import styles from './hero.module.css';
 
 import Background from './background/background';
 import PlanetSystem from './planet/planet-system';
-import HeroContent from './content/hero-content';
-import HeroActions from './actions/hero-actions';
-import ScrollIndicator from './scroll/scroll-indicator';
+import HeroContent from './presentation/content/hero-content';
+import HeroActions from './presentation/actions/hero-actions';
+import ScrollIndicator from './presentation/scroll/scroll-indicator';
 
 export default function Hero() {
   return (

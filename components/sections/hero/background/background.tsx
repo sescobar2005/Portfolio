@@ -1,15 +1,11 @@
 import styles from './background.module.css';
-
-import Nebula from './nebula';
-import Stars from './stars';
-import AmbientGlow from './ambient-glow';
+import CosmicCanvas from './canvas/cosmic-canvas';
 
 export default function Background() {
   return (
     <div className={styles.background} aria-hidden="true">
-      <Nebula />
-      <Stars />
-      <AmbientGlow />
+      <CosmicCanvas />
+      <div className={styles.vignette} />
     </div>
   );
 }
