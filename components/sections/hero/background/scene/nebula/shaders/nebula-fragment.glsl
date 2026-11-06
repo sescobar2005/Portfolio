@@ -65,6 +65,7 @@ float fbm(vec2 p) {
 
 void main() {
     vec2 uv = (vUv - 0.5) * 2.0;
+
     uv.x *= uAspect;
 
     float time = uTime * 0.012;
@@ -96,39 +97,50 @@ void main() {
         mediumClouds * 0.30 +
         smallClouds * 0.15;
 
-    // Expanded density range
+    // Cloud density
     float density = smoothstep(
         0.32,
         0.62,
         cloudField
     );
 
-    // Preserve internal variations
     density *= 0.75 + mediumClouds * 0.5;
 
-    
     // --------------------------------------------------
-    // RECTANGULAR EDGE FALLOFF
+    // ORGANIC EDGE MASK
     // --------------------------------------------------
 
-    float normalizedX = abs(uv.x) / uAspect;
-    float normalizedY = abs(uv.y);
+    vec2 maskUv = (vUv - 0.5) * 2.0;
 
-    float edgeX = 1.0 - smoothstep(
-        0.72,
-        1.0,
-        normalizedX
+    float radialDistance = length(
+        maskUv * vec2(0.88, 1.0)
     );
 
-    float edgeY = 1.0 - smoothstep(
-        0.72,
-        1.0,
-        normalizedY
+    float boundaryNoise = fbm(
+        maskUv * 3.2 +
+        vec2(uSeed * 0.37, time * 0.2)
     );
 
-    float edge = edgeX * edgeY;
+    float organicBoundary =
+        0.82 + (boundaryNoise - 0.5) * 0.24;
 
-    // Color
+    float edge = 1.0 - smoothstep(
+        organicBoundary - 0.18,
+        organicBoundary + 0.08,
+        radialDistance
+    );
+
+    // Additional soft cloud variation near edges
+    edge *= smoothstep(
+        0.02,
+        0.35,
+        density + boundaryNoise * 0.15
+    );
+
+    // --------------------------------------------------
+    // COLOR
+    // --------------------------------------------------
+
     vec3 deepBlue = vec3(0.025, 0.045, 0.16);
     vec3 violet = vec3(0.28, 0.09, 0.55);
     vec3 cyan = vec3(0.08, 0.38, 0.65);
@@ -151,7 +163,10 @@ void main() {
         smallClouds * density * 0.3
     );
 
-    // Final alpha
+    // --------------------------------------------------
+    // FINAL ALPHA
+    // --------------------------------------------------
+
     float alpha = density * edge * uOpacity;
 
     gl_FragColor = vec4(color, alpha);
