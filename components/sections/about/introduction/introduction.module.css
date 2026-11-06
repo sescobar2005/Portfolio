@@ -1,0 +1,73 @@
+.introduction {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* SECTION LABEL */
+
+.sectionLabel {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+
+  color: #a78bfa;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+/* TITLE */
+
+.title {
+  margin-bottom: 1.75rem;
+
+  color: #f8fafc;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+
+  letter-spacing: -0.05em;
+  line-height: 1.15;
+}
+
+.title span {
+  color: #60a5fa;
+}
+
+/* DESCRIPTION */
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.description p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+/* SIGNATURE */
+
+.signature {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+
+  margin-top: 2rem;
+
+  color: #64748b;
+  font-size: 0.75rem;
+  font-style: italic;
+  letter-spacing: 0.04em;
+}
+
+.signatureLine {
+  width: 32px;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    #60a5fa,
+    transparent
+  );
+}
