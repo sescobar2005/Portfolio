@@ -272,7 +272,10 @@ void main() {
   // ── Lighting ───────────────────────────────────────────────────
   vec3 lightDirection = normalize(uLightDir);
 
+  // Diffuse lighting with subtle ambient for dark-side visibility.
   float diffuse = max(dot(normal, lightDirection), 0.0);
+  float ambient = 0.10;
+  float lighting = ambient + diffuse * 1.15;
 
   // ── Procedural ring shadows cast onto the planet surface ───────
   vec3 pRing = uPlanetToRing * vPosition;
@@ -332,9 +335,10 @@ void main() {
 
   diffuse *= ringShadow;
 
-  float ambient = 0.13;
-  float lighting = ambient + diffuse * 1.18;
+  // Recalculate lighting with ring shadow applied.
+  lighting = ambient + diffuse * 1.15;
 
+  // ── Atmospheric Fresnel rim ────────────────────────────────────
   vec3 viewDirection = normalize(vViewPosition);
 
   float fresnel = pow(
@@ -346,47 +350,7 @@ void main() {
   vec3 atmosphereColor = vec3(0.300, 0.500, 0.750);
 
   color *= lighting;
-  color += atmosphereColor * fresnel * 0.22;
-
-  gl_FragColor = vec4(color, 1.0);
-}
-      // Band 2: 2.82 - 3.18
-      if (radius >= uRingBands1.z && radius <= uRingBands1.w) {
-        float d = min(radius - uRingBands1.z, uRingBands1.w - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-      // Band 3: 3.22 - 3.42
-      if (radius >= uRingBands2.x && radius <= uRingBands2.y) {
-        float d = min(radius - uRingBands2.x, uRingBands2.y - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-      // Band 4: 3.50 - 3.58
-      if (radius >= uRingBands2.z && radius <= uRingBands2.w) {
-        float d = min(radius - uRingBands2.z, uRingBands2.w - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-
-      ringShadow = 1.0 - shadow * 0.5;
-    }
-  }
-
-  diffuse *= ringShadow;
-
-  float ambient = 0.13;
-  float lighting = ambient + diffuse * 1.18;
-
-  vec3 viewDirection = normalize(vViewPosition);
-
-  float fresnel = pow(
-    1.0 - max(dot(normal, viewDirection), 0.0),
-    3.0
-  );
-
-  // Subtle Earth-like atmospheric rim.
-  vec3 atmosphereColor = vec3(0.300, 0.500, 0.750);
-
-  color *= lighting;
-  color += atmosphereColor * fresnel * 0.22;
+  color += atmosphereColor * fresnel * 0.20;
 
   gl_FragColor = vec4(color, 1.0);
 }
