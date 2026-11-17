@@ -48,15 +48,7 @@ export default function RingSystem() {
   useFrame((state, delta) => {
     if (!ringSystem.current) return;
 
-    const time = state.clock.elapsedTime;
-
     ringSystem.current.rotation.y += delta * 0.12;
-
-    ringSystem.current.rotation.z =
-      -0.28 + Math.sin(time * 0.18) * 0.025;
-
-    ringSystem.current.rotation.x =
-      1.12 + Math.sin(time * 0.12) * 0.018;
   });
 
   return (
