@@ -1,6 +1,5 @@
 'use client';
 
-import { useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -33,9 +32,12 @@ export default function RingParticles() {
 
         const angle = Math.random() * Math.PI * 2;
 
+        // Particles are laid out in the XY plane so that RingSystem's
+        // equatorial tilt [-PI/2, 0, 0] maps them into the XZ plane,
+        // matching the ring bands' orientation.
         positions[offset * 3] = Math.cos(angle) * radius;
-        positions[offset * 3 + 1] = (Math.random() - 0.5) * 0.025;
-        positions[offset * 3 + 2] = Math.sin(angle) * radius;
+        positions[offset * 3 + 1] = Math.sin(angle) * radius;
+        positions[offset * 3 + 2] = (Math.random() - 0.5) * 0.025;
 
         sizes[offset] = 0.015 + Math.random() * 0.025;
 

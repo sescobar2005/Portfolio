@@ -19,23 +19,15 @@ export default function RingHalf({
   opacity,
 }: RingHalfProps) {
   const geometry = useMemo(() => {
-    const isFront = side === 'front';
-
-    return new THREE.RingGeometry(
-      innerRadius,
-      outerRadius,
-      256,
-      1,
-      isFront ? Math.PI : 0,
-      Math.PI,
-    );
-  }, [innerRadius, outerRadius, side]);
+    // Full 360-degree ring geometry. No startAngle/endAngle split, so the
+    // ring forms a complete annulus with no seam between front and back.
+    return new THREE.RingGeometry(innerRadius, outerRadius, 256);
+  }, [innerRadius, outerRadius]);
 
   return (
     <mesh
       geometry={geometry}
       rotation={[-Math.PI / 2, 0, 0]}
-      renderOrder={side === 'back' ? 1 : 2}
     >
       <shaderMaterial
         vertexShader={`
@@ -93,7 +85,7 @@ export default function RingHalf({
         transparent
         side={THREE.DoubleSide}
         depthTest
-        depthWrite={false}
+        depthWrite={true}
         blending={THREE.AdditiveBlending}
         toneMapped={false}
       />
