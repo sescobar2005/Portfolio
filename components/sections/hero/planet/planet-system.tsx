@@ -87,7 +87,7 @@ export default function PlanetSystem() {
     );
     const qX = new THREE.Quaternion().setFromAxisAngle(
       new THREE.Vector3(1, 0, 0),
-      -dy * sensitivity,
+      dy * sensitivity,
     );
 
     targetQuaternionRef.current

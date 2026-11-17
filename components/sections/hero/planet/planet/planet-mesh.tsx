@@ -35,7 +35,7 @@ export default function PlanetMesh() {
   );
 
   return (
-    <mesh ref={planet}>
+    <mesh ref={planet} renderOrder={0}>
       <sphereGeometry args={[2, 160, 160]} />
 
       <shaderMaterial

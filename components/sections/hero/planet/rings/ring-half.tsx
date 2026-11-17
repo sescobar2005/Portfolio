@@ -84,7 +84,7 @@ export default function RingHalf({
         transparent
         side={THREE.DoubleSide}
         depthTest
-        depthWrite={true}
+        depthWrite={false}
         blending={THREE.AdditiveBlending}
         toneMapped={false}
       />
