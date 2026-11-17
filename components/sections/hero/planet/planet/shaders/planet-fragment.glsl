@@ -209,21 +209,47 @@ void main() {
     smoothstep(0.88, 1.0, distFromLand) * 0.3
   );
 
-  // ── Land colors — elevation-based biome base ───────────────────
+  // ── Land colors — biome classification ───────────────────────────
+  // Moisture-like field from low-frequency noise
+  float moisture = fbm2(terrainPosition.xy * 0.9 + dw * 0.4, 4);
+  moisture = smoothstep(0.35, 0.65, moisture);
+
+  // Desert likelihood: dry (low moisture) + mid-to-high elevation
+  float desertFactor = (1.0 - moisture) * smoothstep(0.40, 0.75, elevation);
+
+  // Mountain factor: high elevation
+  float mountainFactor = smoothstep(0.55, 0.85, elevation);
+
+  // Forest factor: moisture + lower-to-mid elevation
+  float forestFactor = moisture * (1.0 - mountainFactor) * (1.0 - desertFactor);
+
+  // Base terrain: forest at lower elevations
   vec3 landColor = mix(
     FOREST_DEEP,
     FOREST_EMERALD,
-    smoothstep(0.25, 0.60, elevation)
+    smoothstep(0.20, 0.55, elevation)
   );
+
+  // Apply desert where dry and elevated
   landColor = mix(
     landColor,
-    FOREST_GREEN,
-    smoothstep(0.45, 0.75, elevation) * 0.55
+    mix(DESERT_OCHRE, DESERT_SANDSTONE, smoothstep(0.3, 0.7, elevation)),
+    desertFactor * 0.85
   );
+
+  // Apply mountain stone at high elevations
   landColor = mix(
     landColor,
-    MOUNTAIN_STONE,
-    smoothstep(0.65, 0.90, elevation) * 0.45
+    mix(MOUNTAIN_SLATE, MOUNTAIN_LIGHT, smoothstep(0.5, 0.8, elevation)),
+    mountainFactor * 0.80
+  );
+
+  // Mineral deposits in mountain regions
+  float mineralDeposit = fbm(terrainPosition * 9.0, 4);
+  landColor = mix(
+    landColor,
+    MOUNTAIN_DEPOSIT,
+    mineralDeposit * mountainFactor * 0.25
   );
 
   // ── Crater coloration — darker spots on land ───────────────────
