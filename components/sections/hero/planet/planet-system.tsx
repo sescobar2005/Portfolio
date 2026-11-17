@@ -1,15 +1,15 @@
-import Planet from './planet';
-import PlanetRings from './planet-rings';
-import OrbitalEffects from './orbital-effects';
+'use client';
 
-import styles from './planet-system.module.css';
+import PlanetMesh from './planet/planet-mesh';
+import Atmosphere from './effects/atmosphere';
+import RingSystem from './rings/ring-system';
 
 export default function PlanetSystem() {
   return (
-    <div className={styles.planetSystem} aria-hidden="true">
-      <PlanetRings />
-      <OrbitalEffects />
-      <Planet />
-    </div>
+    <group position={[2.6, -0.15, -3.5]} rotation={[0.12, 0, -0.12]}>
+      <RingSystem />
+      <PlanetMesh />
+      <Atmosphere />
+    </group>
   );
 }

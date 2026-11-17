@@ -7,12 +7,12 @@ import NebulaClouds from './nebula/nebula-clouds';
 import ShootingStars from './shooting-stars/shooting-stars';
 import StarField from './stars/star-field';
 import CosmicDust from './cosmic-dust/cosmic-dust';
-import CosmicEffects from './effects/cosmic-effects';
 import HeroStars from './stars/hero-stars';
 import SceneLights from './lighting/scene-lights';
 
-function CosmicSceneContent() {
+import PlanetSystem from '../../planet/planet-system';
 
+function CosmicSceneContent() {
   return (
     <>
       <color attach="background" args={['#030611']} />
@@ -29,6 +29,7 @@ function CosmicSceneContent() {
       <ShootingStars />
       <CosmicDust />
 
+      <PlanetSystem />
     </>
   );
 }
