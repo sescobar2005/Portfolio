@@ -142,8 +142,8 @@ export default function PlanetSystem() {
 
         <group ref={axialGroupRef}>
           <PlanetMesh />
-          <Atmosphere />
           <Clouds />
+          <Atmosphere />
           <RingSystem />
         </group>
       </group>

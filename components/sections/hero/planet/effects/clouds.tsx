@@ -21,7 +21,7 @@ export default function Clouds() {
   });
 
   return (
-    <mesh scale={1.025}>
+    <mesh scale={1.025} renderOrder={1}>
       <sphereGeometry args={[2, 64, 64]} />
 
       <shaderMaterial

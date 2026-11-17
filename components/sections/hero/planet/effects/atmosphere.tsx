@@ -62,6 +62,7 @@ interface AtmosphereLayerProps {
   opacity: number;
   power: number;
   color: string;
+  renderOrder: number;
 }
 
 function AtmosphereLayer({
@@ -69,9 +70,10 @@ function AtmosphereLayer({
   opacity,
   power,
   color,
+  renderOrder,
 }: AtmosphereLayerProps) {
   return (
-    <mesh scale={scale}>
+    <mesh scale={scale} renderOrder={renderOrder}>
       <sphereGeometry args={[2, 160, 160]} />
 
       <shaderMaterial
@@ -106,26 +108,29 @@ export default function Atmosphere() {
     <group>
       {/* Inner atmospheric scattering */}
       <AtmosphereLayer
-        scale={1.018}
+        scale={1.03}
         opacity={0.42}
         power={5.5}
         color="#398bff"
+        renderOrder={2}
       />
 
       {/* Middle atmospheric glow */}
       <AtmosphereLayer
-        scale={1.055}
+        scale={1.08}
         opacity={0.20}
         power={3.0}
         color="#398bff"
+        renderOrder={3}
       />
 
       {/* Wide, soft outer diffusion */}
       <AtmosphereLayer
-        scale={1.105}
+        scale={1.14}
         opacity={0.075}
         power={1.65}
         color="#62baff"
+        renderOrder={4}
       />
     </group>
   );
