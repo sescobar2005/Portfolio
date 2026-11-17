@@ -168,8 +168,14 @@ void main() {
 
   // ── Continental distribution with domain warp ──────────────────
   vec2 dw = domainWarp(terrainPosition.xz * 0.8);
-  float continents = fbm(terrainPosition.xz * 1.35 + dw * 0.5, 5);
-  float continentalDetail = fbm(terrainPosition.xz * 3.2 + dw.yx * 0.3, 5);
+  float continents = fbm(
+    vec3(terrainPosition.xz * 1.35 + dw * 0.5, terrainPosition.y),
+    5,
+  );
+  float continentalDetail = fbm(
+    vec3(terrainPosition.xz * 3.2 + dw.yx * 0.3, terrainPosition.y),
+    5,
+  );
 
   float landMask = smoothstep(
     0.40,
