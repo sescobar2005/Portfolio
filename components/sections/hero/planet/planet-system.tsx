@@ -115,33 +115,21 @@ export default function PlanetSystem() {
   return (
     <group position={[2.6, -0.15, -3.5]} rotation={[0.12, 0, -0.12]}>
       <group ref={planetGroupRef}>
-        {/* Invisible hit sphere slightly larger than the planet (radius 2.0)
-            so it captures pointer events across the full planetary disk,
-            including the back-facing side. */}
-        <mesh
-          geometry={new THREE.SphereGeometry(2.15, 32, 32)}
-          material={new THREE.MeshBasicMaterial({
-            color: 0x000000,
-            transparent: true,
-            opacity: 0,
-            side: THREE.DoubleSide,
-          })}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerLeave}
-          onPointerOver={() => {
-            setIsHovering(true);
-            setCursor('grab');
-          }}
-          onPointerOut={() => {
-            setIsHovering(false);
-            setCursor('default');
-          }}
-        />
-
         <group ref={axialGroupRef}>
-          <PlanetMesh />
+          <PlanetMesh
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerLeave={handlePointerLeave}
+            onPointerOver={() => {
+              setIsHovering(true);
+              setCursor('grab');
+            }}
+            onPointerOut={() => {
+              setIsHovering(false);
+              setCursor('default');
+            }}
+          />
           <Clouds />
           <Atmosphere />
           <RingSystem />

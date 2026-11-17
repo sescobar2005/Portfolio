@@ -18,7 +18,23 @@ invRingTilt.set(
   0, 1, 0,
 );
 
-export default function PlanetMesh() {
+interface PlanetMeshProps {
+  onPointerDown?: (event: unknown) => void;
+  onPointerMove?: (event: unknown) => void;
+  onPointerUp?: () => void;
+  onPointerLeave?: () => void;
+  onPointerOver?: () => void;
+  onPointerOut?: () => void;
+}
+
+export default function PlanetMesh({
+  onPointerDown,
+  onPointerMove,
+  onPointerUp,
+  onPointerLeave,
+  onPointerOver,
+  onPointerOut,
+}: PlanetMeshProps) {
   const planet = useRef<THREE.Mesh>(null);
   const material = useRef<THREE.ShaderMaterial>(null);
 
@@ -48,7 +64,16 @@ export default function PlanetMesh() {
   });
 
   return (
-    <mesh ref={planet} renderOrder={0}>
+    <mesh
+      ref={planet}
+      renderOrder={0}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerLeave={onPointerLeave}
+      onPointerOver={onPointerOver}
+      onPointerOut={onPointerOut}
+    >
       <sphereGeometry args={[2, 160, 160]} />
 
       <shaderMaterial
