@@ -1,11 +1,7 @@
 precision highp float;
 
 uniform float uTime;
-uniform mat3 uPlanetToRing;
-uniform float uRingOrbitAngle;
 uniform vec3 uLightDir;
-uniform vec4 uRingBands1;
-uniform vec4 uRingBands2;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
@@ -298,67 +294,6 @@ void main() {
   float diffuse = max(dot(normal, lightDirection), 0.0);
   float ambient = 0.10;
   float lighting = ambient + diffuse * 1.15;
-
-  // ── Procedural ring shadows cast onto the planet surface ───────
-  vec3 pRing = uPlanetToRing * vPosition;
-  vec3 lRing = uPlanetToRing * lightDirection;
-
-  // Apply ring orbital rotation so shadows follow ring movement.
-  float cosA = cos(uRingOrbitAngle);
-  float sinA = sin(uRingOrbitAngle);
-
-  vec3 pRingOrbital = vec3(
-    pRing.x * cosA - pRing.z * sinA,
-    pRing.y,
-    pRing.x * sinA + pRing.z * cosA
-  );
-
-  vec3 lRingOrbital = vec3(
-    lRing.x * cosA - lRing.z * sinA,
-    lRing.y,
-    lRing.x * sinA + lRing.z * cosA
-  );
-
-  float ringShadow = 1.0;
-  if (abs(lRingOrbital.y) > 0.001) {
-    float t = -pRingOrbital.y / lRingOrbital.y;
-
-    if (t > 0.0) {
-      vec3 hit = pRingOrbital + t * lRingOrbital;
-      float radius = sqrt(hit.x * hit.x + hit.z * hit.z);
-
-      float softness = 0.08;
-      float shadow = 0.0;
-
-      // Band 1: 2.45 - 2.72
-      if (radius >= uRingBands1.x && radius <= uRingBands1.y) {
-        float d = min(radius - uRingBands1.x, uRingBands1.y - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-      // Band 2: 2.82 - 3.18
-      if (radius >= uRingBands1.z && radius <= uRingBands1.w) {
-        float d = min(radius - uRingBands1.z, uRingBands1.w - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-      // Band 3: 3.22 - 3.42
-      if (radius >= uRingBands2.x && radius <= uRingBands2.y) {
-        float d = min(radius - uRingBands2.x, uRingBands2.y - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-      // Band 4: 3.50 - 3.58
-      if (radius >= uRingBands2.z && radius <= uRingBands2.w) {
-        float d = min(radius - uRingBands2.z, uRingBands2.w - radius);
-        shadow = max(shadow, smoothstep(0.0, softness, d));
-      }
-
-      ringShadow = 1.0 - shadow * 0.5;
-    }
-  }
-
-  diffuse *= ringShadow;
-
-  // Recalculate lighting with ring shadow applied.
-  lighting = ambient + diffuse * 1.15;
 
   // ── Atmospheric Fresnel rim ────────────────────────────────────
   vec3 viewDirection = normalize(vViewPosition);
