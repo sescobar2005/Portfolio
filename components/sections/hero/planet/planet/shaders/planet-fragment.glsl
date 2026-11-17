@@ -2,6 +2,7 @@ precision highp float;
 
 uniform float uTime;
 uniform mat3 uPlanetToRing;
+uniform float uRingOrbitAngle;
 uniform vec3 uLightDir;
 uniform vec4 uRingBands1;
 uniform vec4 uRingBands2;
@@ -189,12 +190,28 @@ void main() {
   vec3 pRing = uPlanetToRing * vPosition;
   vec3 lRing = uPlanetToRing * lightDirection;
 
+  // Apply ring orbital rotation so shadows follow ring movement.
+  float cosA = cos(uRingOrbitAngle);
+  float sinA = sin(uRingOrbitAngle);
+
+  vec3 pRingOrbital = vec3(
+    pRing.x * cosA - pRing.z * sinA,
+    pRing.y,
+    pRing.x * sinA + pRing.z * cosA
+  );
+
+  vec3 lRingOrbital = vec3(
+    lRing.x * cosA - lRing.z * sinA,
+    lRing.y,
+    lRing.x * sinA + lRing.z * cosA
+  );
+
   float ringShadow = 1.0;
-  if (abs(lRing.y) > 0.001) {
-    float t = -pRing.y / lRing.y;
+  if (abs(lRingOrbital.y) > 0.001) {
+    float t = -pRingOrbital.y / lRingOrbital.y;
 
     if (t > 0.0) {
-      vec3 hit = pRing + t * lRing;
+      vec3 hit = pRingOrbital + t * lRingOrbital;
       float radius = sqrt(hit.x * hit.x + hit.z * hit.z);
 
       float softness = 0.08;

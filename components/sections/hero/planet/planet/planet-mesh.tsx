@@ -2,6 +2,7 @@
 
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
 
 import vertexShader from './shaders/planet-vertex.glsl';
 import fragmentShader from './shaders/planet-fragment.glsl';
@@ -9,7 +10,7 @@ import fragmentShader from './shaders/planet-fragment.glsl';
 // Constant planet-to-ring transform. Rings sit in the planet's equatorial
 // plane (flat in XZ, rotation [-PI/2, 0, 0] under the same axial group as
 // the planet), so the transform from planet-local to ring-local space is a
-// fixed inverse of the ring's equatorial tilt. No per-frame updates needed.
+// fixed inverse of the ring's equatorial tilt.
 const invRingTilt = new THREE.Matrix3();
 invRingTilt.set(
   1, 0, 0,
@@ -25,6 +26,7 @@ export default function PlanetMesh() {
     () => ({
       uTime: { value: 0 },
       uPlanetToRing: { value: invRingTilt.clone() },
+      uRingOrbitAngle: { value: 0 },
       uLightDir: {
         value: new THREE.Vector3(-0.55, 0.65, 0.75).normalize(),
       },
@@ -33,6 +35,17 @@ export default function PlanetMesh() {
     }),
     [],
   );
+
+  useFrame((state: any, delta: number) => {
+    if (material.current) {
+      material.current.uniforms.uTime.value = state.clock.elapsedTime;
+
+      // Ring orbital rotation speed matches RingSystem (0.06 rad/frame).
+      // This keeps planet ring shadows synchronized with ring movement.
+      material.current.uniforms.uRingOrbitAngle.value =
+        state.clock.elapsedTime * 0.06;
+    }
+  });
 
   return (
     <mesh ref={planet} renderOrder={0}>
