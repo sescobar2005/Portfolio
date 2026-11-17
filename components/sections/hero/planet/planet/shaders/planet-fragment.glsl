@@ -107,65 +107,78 @@ void main() {
   float continentalDetail = fbm(terrainPosition * 3.2);
 
   float landMask = smoothstep(
-    0.43,
-    0.58,
-    continents + continentalDetail * 0.12
+    0.42,
+    0.56,
+    continents + continentalDetail * 0.10
   );
 
   // Geological surface variation.
   float mountains = fbm(terrainPosition * 5.0);
-  float fineDetail = fbm(terrainPosition * 16.0);
-  float rockyDetail = mountains * 0.65 + fineDetail * 0.35;
+  float fineDetail = fbm(terrainPosition * 14.0);
+  float elevation = mountains * 0.65 + fineDetail * 0.35;
 
   float craters = craterField(direction * 34.0);
 
-  vec3 oceanDeep = vec3(0.012, 0.035, 0.085);
-  vec3 oceanBlue = vec3(0.025, 0.09, 0.17);
-  vec3 oceanShallow = vec3(0.07, 0.19, 0.27);
+  // Ocean colors — deep blue-teal to turquoise.
+  vec3 oceanDeep = vec3(0.015, 0.045, 0.085);
+  vec3 ocean = vec3(0.030, 0.100, 0.170);
+  vec3 coastal = vec3(0.060, 0.220, 0.240);
+  vec3 shallow = vec3(0.120, 0.350, 0.300);
 
-  vec3 landLow = vec3(0.16, 0.20, 0.25);
-  vec3 landMid = vec3(0.31, 0.35, 0.39);
-  vec3 landHigh = vec3(0.53, 0.56, 0.59);
-  vec3 mountainColor = vec3(0.76, 0.79, 0.82);
-
-  vec3 ocean = mix(
+  vec3 oceanColor = mix(
     oceanDeep,
-    oceanBlue,
+    ocean,
     smoothstep(0.2, 0.55, continents)
   );
-
-  ocean = mix(
-    ocean,
-    oceanShallow,
-    smoothstep(0.45, 0.7, continentalDetail) * 0.45
+  oceanColor = mix(
+    oceanColor,
+    coastal,
+    smoothstep(0.45, 0.72, continentalDetail) * 0.50
+  );
+  oceanColor = mix(
+    oceanColor,
+    shallow,
+    smoothstep(0.60, 0.85, continentalDetail) * 0.35
   );
 
-  vec3 land = mix(
+  // Land colors — deep emerald to pale green.
+  vec3 landLow = vec3(0.100, 0.300, 0.180);
+  vec3 landMid = vec3(0.180, 0.450, 0.280);
+  vec3 landHigh = vec3(0.300, 0.600, 0.380);
+  vec3 mountainColor = vec3(0.600, 0.750, 0.550);
+  vec3 iceColor = vec3(0.880, 0.940, 0.960);
+
+  vec3 landColor = mix(
     landLow,
     landMid,
-    smoothstep(0.25, 0.65, rockyDetail)
+    smoothstep(0.25, 0.65, elevation)
   );
-
-  land = mix(
-    land,
+  landColor = mix(
+    landColor,
     landHigh,
-    smoothstep(0.48, 0.75, rockyDetail) * 0.65
+    smoothstep(0.48, 0.78, elevation) * 0.65
   );
-
-  land = mix(
-    land,
+  landColor = mix(
+    landColor,
     mountainColor,
-    smoothstep(0.68, 0.85, rockyDetail) * 0.55
+    smoothstep(0.70, 0.90, elevation) * 0.55
   );
 
-  // Crater coloration.
-  land *= 0.88 + craters * 0.28;
+  // Crater coloration — darker spots.
+  landColor *= 0.85 + craters * 0.30;
 
-  vec3 color = mix(ocean, land, landMask);
+  // Ice at high latitudes and high elevations.
+  float latitude = abs(normal.y);
+  float iceMask = smoothstep(0.72, 0.95, latitude) *
+                  smoothstep(0.65, 0.90, elevation);
+  landColor = mix(landColor, iceColor, iceMask);
+  oceanColor = mix(oceanColor, iceColor, iceMask * 0.50);
+
+  vec3 color = mix(oceanColor, landColor, landMask);
 
   // Fine geological grain.
-  float surfaceGrain = noise(terrainPosition * 42.0);
-  color *= 0.92 + surfaceGrain * 0.16;
+  float surfaceGrain = noise(terrainPosition * 45.0);
+  color *= 0.90 + surfaceGrain * 0.18;
 
   // Lighting.
   vec3 lightDirection = normalize(uLightDir);
@@ -224,10 +237,11 @@ void main() {
     3.0
   );
 
-  vec3 atmosphereColor = vec3(0.12, 0.36, 0.85);
+  // Luminous blue-cyan atmospheric rim.
+  vec3 atmosphereColor = vec3(0.200, 0.700, 0.950);
 
   color *= lighting;
-  color += atmosphereColor * fresnel * 0.28;
+  color += atmosphereColor * fresnel * 0.35;
 
   gl_FragColor = vec4(color, 1.0);
 }
