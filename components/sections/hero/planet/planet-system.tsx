@@ -18,6 +18,8 @@ export default function PlanetSystem() {
   const isDraggingRef = useRef(false);
   const startMouseRef = useRef({ x: 0, y: 0 });
   const startQuaternionRef = useRef(new THREE.Quaternion());
+  const targetQuaternionRef = useRef(new THREE.Quaternion());
+  const currentQuaternionRef = useRef(new THREE.Quaternion());
 
   // Hover state only changes on pointer-over/out, not every move frame.
   const [isHovering, setIsHovering] = useState(false);
@@ -36,6 +38,17 @@ export default function PlanetSystem() {
     if (axialGroupRef.current) {
       axialGroupRef.current.rotation.y += delta * 0.025;
     }
+
+    // Smoothly interpolate toward the target quaternion for fluid drag rotation.
+    if (planetGroupRef.current) {
+      const current = planetGroupRef.current.quaternion;
+      const target = targetQuaternionRef.current;
+
+      // Slerp factor: higher = snappier, lower = smoother/slower.
+      const t = Math.min(delta * 12, 1);
+      current.slerpQuaternions(current, target, t);
+      planetGroupRef.current.quaternion.copy(current);
+    }
   });
 
   // Ensure dragging is never left stuck if the pointer is released outside
@@ -50,22 +63,24 @@ export default function PlanetSystem() {
     };
   }, []);
 
-  const handlePointerDown = (event: React.PointerEvent) => {
-    if (event.button !== 0) return;
+  const handlePointerDown = (event: unknown) => {
+    const pointerEvent = event as PointerEvent;
+    if (pointerEvent.button !== 0) return;
     isDraggingRef.current = true;
-    startMouseRef.current = { x: event.clientX, y: event.clientY };
+    startMouseRef.current = { x: pointerEvent.clientX, y: pointerEvent.clientY };
     startQuaternionRef.current.copy(planetGroupRef.current!.quaternion);
-    event.preventDefault();
-    event.stopPropagation();
+    targetQuaternionRef.current.copy(planetGroupRef.current!.quaternion);
+    currentQuaternionRef.current.copy(planetGroupRef.current!.quaternion);
   };
 
-  const handlePointerMove = (event: React.PointerEvent) => {
+  const handlePointerMove = (event: unknown) => {
     if (!isDraggingRef.current || !planetGroupRef.current) return;
 
-    const dx = event.clientX - startMouseRef.current.x;
-    const dy = event.clientY - startMouseRef.current.y;
+    const pointerEvent = event as PointerEvent;
+    const dx = pointerEvent.clientX - startMouseRef.current.x;
+    const dy = pointerEvent.clientY - startMouseRef.current.y;
 
-    const sensitivity = 0.004;
+    const sensitivity = 0.005;
     const qY = new THREE.Quaternion().setFromAxisAngle(
       new THREE.Vector3(0, 1, 0),
       dx * sensitivity,
@@ -75,7 +90,7 @@ export default function PlanetSystem() {
       -dy * sensitivity,
     );
 
-    planetGroupRef.current.quaternion
+    targetQuaternionRef.current
       .copy(startQuaternionRef.current)
       .multiply(qY)
       .multiply(qX)
