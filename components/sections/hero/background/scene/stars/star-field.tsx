@@ -31,7 +31,7 @@ export default function StarField() {
 
       {/* Foreground stars */}
       <StarParticles
-        position={[0, 0, 1.5]}
+        position={[0, 0, -12]}
         scale={[16, 10, 5]}
         count={75}
         size={3.5}
