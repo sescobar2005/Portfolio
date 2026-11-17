@@ -11,6 +11,7 @@ interface DustLayerProps {
   opacity: number;
   color: string;
   speed: number;
+  position?: [number, number, number];
 }
 
 export default function DustLayer({
@@ -20,6 +21,7 @@ export default function DustLayer({
   opacity,
   color,
   speed,
+  position,
 }: DustLayerProps) {
   const { geometry, positions, phases, velocities } = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
@@ -29,9 +31,12 @@ export default function DustLayer({
     const velocities = new Float32Array(count);
 
     for (let i = 0; i < count; i++) {
+      const zOffset = position?.[2] ?? 0;
+
       positions[i * 3] = THREE.MathUtils.randFloatSpread(spread[0]);
       positions[i * 3 + 1] = THREE.MathUtils.randFloatSpread(spread[1]);
-      positions[i * 3 + 2] = THREE.MathUtils.randFloatSpread(spread[2]);
+      positions[i * 3 + 2] =
+        THREE.MathUtils.randFloatSpread(spread[2]) + zOffset;
 
       phases[i] = Math.random() * Math.PI * 2;
       velocities[i] = 0.5 + Math.random() * 0.5;

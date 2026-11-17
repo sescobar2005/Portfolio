@@ -11,6 +11,7 @@ export default function CosmicDust() {
         opacity={0.07}
         color="#829bcf"
         speed={0.012}
+        position={[0, 0, -10]}
       />
 
       {/* Mid-distance cosmic dust */}
@@ -21,6 +22,7 @@ export default function CosmicDust() {
         opacity={0.09}
         color="#a3b8e8"
         speed={0.02}
+        position={[0, 0, -9]}
       />
 
       {/* Foreground cosmic dust */}
@@ -31,6 +33,7 @@ export default function CosmicDust() {
         opacity={0.12}
         color="#c3d5ff"
         speed={0.025}
+        position={[0, 0, -8]}
       />
     </group>
   );

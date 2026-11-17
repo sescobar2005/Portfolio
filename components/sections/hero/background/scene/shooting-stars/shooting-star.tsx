@@ -30,7 +30,7 @@ export default function ShootingStar({
     () => [
       THREE.MathUtils.randFloatSpread(bounds[0]),
       THREE.MathUtils.randFloatSpread(bounds[1]),
-      THREE.MathUtils.randFloat(-3, -9),
+      THREE.MathUtils.randFloat(-12, -16),
     ] as [number, number, number],
     [bounds],
   );
