@@ -141,12 +141,12 @@ void main() {
     smoothstep(0.60, 0.85, continentalDetail) * 0.25
   );
 
-  // Land colors — natural Earth greens and browns, not emerald.
-  vec3 landLow = vec3(0.180, 0.260, 0.150);
-  vec3 landMid = vec3(0.280, 0.380, 0.220);
-  vec3 landHigh = vec3(0.400, 0.480, 0.320);
-  vec3 mountainColor = vec3(0.550, 0.580, 0.540);
-  vec3 iceColor = vec3(0.920, 0.960, 0.980);
+  // Land colors — purple/violet palette, not emerald.
+  vec3 landLow = vec3(0.120, 0.080, 0.200);
+  vec3 landMid = vec3(0.220, 0.160, 0.340);
+  vec3 landHigh = vec3(0.380, 0.280, 0.480);
+  vec3 mountainColor = vec3(0.500, 0.420, 0.550);
+  vec3 iceColor = vec3(0.950, 0.920, 0.980);
 
   vec3 landColor = mix(
     landLow,
@@ -237,8 +237,8 @@ void main() {
     3.0
   );
 
-  // Subtle Earth-like atmospheric rim.
-  vec3 atmosphereColor = vec3(0.400, 0.600, 0.850);
+  // Subtle violet atmospheric rim complementing the purple planet.
+  vec3 atmosphereColor = vec3(0.350, 0.450, 0.800);
 
   color *= lighting;
   color += atmosphereColor * fresnel * 0.22;
