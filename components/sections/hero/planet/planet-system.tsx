@@ -6,6 +6,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 
 import PlanetMesh from './planet/planet-mesh';
 import Atmosphere from './effects/atmosphere';
+import Clouds from './effects/clouds';
 import RingSystem from './rings/ring-system';
 
 export default function PlanetSystem() {
@@ -127,6 +128,7 @@ export default function PlanetSystem() {
         <group ref={axialGroupRef}>
           <PlanetMesh />
           <Atmosphere />
+          <Clouds />
           <RingSystem />
         </group>
       </group>
