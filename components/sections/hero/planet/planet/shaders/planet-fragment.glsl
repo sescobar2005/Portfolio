@@ -170,11 +170,11 @@ void main() {
   vec2 dw = domainWarp(terrainPosition.xz * 0.8);
   float continents = fbm(
     vec3(terrainPosition.xz * 1.35 + dw * 0.5, terrainPosition.y),
-    5,
+    5
   );
   float continentalDetail = fbm(
     vec3(terrainPosition.xz * 3.2 + dw.yx * 0.3, terrainPosition.y),
-    5,
+    5
   );
 
   float landMask = smoothstep(
