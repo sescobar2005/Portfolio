@@ -3,14 +3,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-const RING_ZONES = [
-  { inner: 2.46, outer: 2.72, count: 800, color: '#3d5a80' },
-  { inner: 2.83, outer: 3.17, count: 700, color: '#8fb4d8' },
-  { inner: 3.23, outer: 3.42, count: 600, color: '#5a7fa8' },
-  { inner: 3.51, outer: 3.58, count: 500, color: '#a8c4e8' },
-];
-
-const TOTAL_PARTICLES = 2600;
+import { ORBITAL_REGIONS, TOTAL_PARTICLES } from './orbital-config';
 
 export default function RingParticles() {
   const particles = useRef<THREE.Group>(null);
@@ -23,12 +16,13 @@ export default function RingParticles() {
 
     let offset = 0;
 
-    for (const zone of RING_ZONES) {
-      const zoneColor = new THREE.Color(zone.color);
+    for (const region of ORBITAL_REGIONS) {
+      const zoneColor = new THREE.Color(region.particleColor);
 
-      for (let i = 0; i < zone.count; i++, offset++) {
+      for (let i = 0; i < region.particleCount; i++, offset++) {
         const radius =
-          zone.inner + Math.random() * (zone.outer - zone.inner);
+          region.innerRadius +
+          Math.random() * (region.outerRadius - region.innerRadius);
 
         const angle = Math.random() * Math.PI * 2;
 
@@ -39,7 +33,9 @@ export default function RingParticles() {
         positions[offset * 3 + 1] = Math.sin(angle) * radius;
         positions[offset * 3 + 2] = (Math.random() - 0.5) * 0.025;
 
-        sizes[offset] = 0.015 + Math.random() * 0.025;
+        sizes[offset] =
+          region.particleSizeMin +
+          Math.random() * (region.particleSizeMax - region.particleSizeMin);
 
         alphas[offset] = 0.3 + Math.random() * 0.6;
 
