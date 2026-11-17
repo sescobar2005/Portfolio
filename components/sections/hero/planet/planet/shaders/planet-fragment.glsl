@@ -155,6 +155,7 @@ void main() {
 
   float time = uTime * 0.002;
 
+  // ── Domain-warped terrain sampling ─────────────────────────────
   vec3 terrainPosition = direction * 5.0;
 
   terrainPosition += vec3(
@@ -165,90 +166,89 @@ void main() {
 
   terrainPosition += vec3(time, 0.0, 0.0);
 
-  // Natural continental shapes.
-  float continents = fbm(terrainPosition * 1.35, 5);
-  float continentalDetail = fbm(terrainPosition * 3.2, 5);
+  // ── Continental distribution with domain warp ──────────────────
+  vec2 dw = domainWarp(terrainPosition.xz * 0.8);
+  float continents = fbm(terrainPosition.xz * 1.35 + dw * 0.5, 5);
+  float continentalDetail = fbm(terrainPosition.xz * 3.2 + dw.yx * 0.3, 5);
 
   float landMask = smoothstep(
-    0.42,
-    0.56,
-    continents + continentalDetail * 0.10
+    0.40,
+    0.55,
+    continents + continentalDetail * 0.12
   );
 
-  // Geological surface variation.
+  // ── Elevation from multi-scale noise ───────────────────────────
   float mountains = fbm(terrainPosition * 5.0, 5);
   float fineDetail = fbm(terrainPosition * 14.0, 5);
   float elevation = mountains * 0.65 + fineDetail * 0.35;
 
   float craters = craterField(direction * 34.0);
 
-  // Ocean colors — deep Earth blue, natural and subdued.
-  vec3 oceanDeep = vec3(0.008, 0.020, 0.050);
-  vec3 ocean = vec3(0.015, 0.045, 0.110);
-  vec3 coastal = vec3(0.030, 0.080, 0.150);
-  vec3 shallow = vec3(0.060, 0.130, 0.200);
+  // ── Ocean colors — layered depth palette ───────────────────────
+  // Distance-from-land factor for coastal transitions
+  float distFromLand = 1.0 - landMask;
 
   vec3 oceanColor = mix(
-    oceanDeep,
-    ocean,
-    smoothstep(0.2, 0.55, continents)
+    OCEAN_ABYSSAL,
+    OCEAN_DEEP,
+    smoothstep(0.3, 0.7, distFromLand)
   );
   oceanColor = mix(
     oceanColor,
-    coastal,
-    smoothstep(0.45, 0.72, continentalDetail) * 0.35
+    OCEAN,
+    smoothstep(0.5, 0.85, distFromLand)
   );
   oceanColor = mix(
     oceanColor,
-    shallow,
-    smoothstep(0.60, 0.85, continentalDetail) * 0.20
+    OCEAN_TURQ,
+    smoothstep(0.75, 0.95, distFromLand) * 0.5
+  );
+  oceanColor = mix(
+    oceanColor,
+    OCEAN_SHALLOW,
+    smoothstep(0.88, 1.0, distFromLand) * 0.3
   );
 
-  // Land colors — natural earth tones: olive greens, browns, stone greys.
-  vec3 landLow = vec3(0.180, 0.220, 0.160);
-  vec3 landMid = vec3(0.280, 0.320, 0.240);
-  vec3 landHigh = vec3(0.400, 0.440, 0.340);
-  vec3 mountainColor = vec3(0.520, 0.500, 0.460);
-  vec3 iceColor = vec3(0.900, 0.920, 0.940);
-
+  // ── Land colors — elevation-based biome base ───────────────────
   vec3 landColor = mix(
-    landLow,
-    landMid,
-    smoothstep(0.25, 0.65, elevation)
+    FOREST_DEEP,
+    FOREST_EMERALD,
+    smoothstep(0.25, 0.60, elevation)
   );
   landColor = mix(
     landColor,
-    landHigh,
-    smoothstep(0.48, 0.78, elevation) * 0.60
+    FOREST_GREEN,
+    smoothstep(0.45, 0.75, elevation) * 0.55
   );
   landColor = mix(
     landColor,
-    mountainColor,
-    smoothstep(0.70, 0.90, elevation) * 0.50
+    MOUNTAIN_STONE,
+    smoothstep(0.65, 0.90, elevation) * 0.45
   );
 
-  // Crater coloration — darker spots.
+  // ── Crater coloration — darker spots on land ───────────────────
   landColor *= 0.85 + craters * 0.30;
 
-  // Ice at high latitudes and high elevations.
+  // ── Ice at high latitudes and high elevations ──────────────────
   float latitude = abs(normal.y);
   float iceMask = smoothstep(0.72, 0.95, latitude) *
                   smoothstep(0.65, 0.90, elevation);
-  landColor = mix(landColor, iceColor, iceMask);
-  oceanColor = mix(oceanColor, iceColor, iceMask * 0.50);
+  landColor = mix(landColor, ICE_GLACIER, iceMask);
+  oceanColor = mix(oceanColor, ICE_PALE, iceMask * 0.50);
 
+  // ── Combine ocean and land ─────────────────────────────────────
   vec3 color = mix(oceanColor, landColor, landMask);
 
-  // Fine geological grain.
+  // ── Fine geological grain ──────────────────────────────────────
   float surfaceGrain = noise(terrainPosition * 45.0);
   color *= 0.90 + surfaceGrain * 0.18;
 
-  // Lighting.
+  // ── Lighting ───────────────────────────────────────────────────
   vec3 lightDirection = normalize(uLightDir);
 
   float diffuse = max(dot(normal, lightDirection), 0.0);
 
-  // Procedural ring shadows cast onto the planet surface.
+  // ── Procedural ring shadows cast onto the planet surface ───────
   vec3 pRing = uPlanetToRing * vPosition;
   vec3 lRing = uPlanetToRing * lightDirection;
 
@@ -284,6 +284,46 @@ void main() {
         float d = min(radius - uRingBands1.x, uRingBands1.y - radius);
         shadow = max(shadow, smoothstep(0.0, softness, d));
       }
+      // Band 2: 2.82 - 3.18
+      if (radius >= uRingBands1.z && radius <= uRingBands1.w) {
+        float d = min(radius - uRingBands1.z, uRingBands1.w - radius);
+        shadow = max(shadow, smoothstep(0.0, softness, d));
+      }
+      // Band 3: 3.22 - 3.42
+      if (radius >= uRingBands2.x && radius <= uRingBands2.y) {
+        float d = min(radius - uRingBands2.x, uRingBands2.y - radius);
+        shadow = max(shadow, smoothstep(0.0, softness, d));
+      }
+      // Band 4: 3.50 - 3.58
+      if (radius >= uRingBands2.z && radius <= uRingBands2.w) {
+        float d = min(radius - uRingBands2.z, uRingBands2.w - radius);
+        shadow = max(shadow, smoothstep(0.0, softness, d));
+      }
+
+      ringShadow = 1.0 - shadow * 0.5;
+    }
+  }
+
+  diffuse *= ringShadow;
+
+  float ambient = 0.13;
+  float lighting = ambient + diffuse * 1.18;
+
+  vec3 viewDirection = normalize(vViewPosition);
+
+  float fresnel = pow(
+    1.0 - max(dot(normal, viewDirection), 0.0),
+    3.0
+  );
+
+  // Subtle Earth-like atmospheric rim.
+  vec3 atmosphereColor = vec3(0.300, 0.500, 0.750);
+
+  color *= lighting;
+  color += atmosphereColor * fresnel * 0.22;
+
+  gl_FragColor = vec4(color, 1.0);
+}
       // Band 2: 2.82 - 3.18
       if (radius >= uRingBands1.z && radius <= uRingBands1.w) {
         float d = min(radius - uRingBands1.z, uRingBands1.w - radius);
