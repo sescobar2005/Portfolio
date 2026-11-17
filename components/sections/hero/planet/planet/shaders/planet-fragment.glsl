@@ -119,11 +119,11 @@ void main() {
 
   float craters = craterField(direction * 34.0);
 
-  // Ocean colors — deep blue-teal to turquoise.
-  vec3 oceanDeep = vec3(0.015, 0.045, 0.085);
-  vec3 ocean = vec3(0.030, 0.100, 0.170);
-  vec3 coastal = vec3(0.060, 0.220, 0.240);
-  vec3 shallow = vec3(0.120, 0.350, 0.300);
+  // Ocean colors — deep Earth blue, less turquoise.
+  vec3 oceanDeep = vec3(0.010, 0.025, 0.060);
+  vec3 ocean = vec3(0.020, 0.060, 0.140);
+  vec3 coastal = vec3(0.040, 0.100, 0.180);
+  vec3 shallow = vec3(0.080, 0.160, 0.240);
 
   vec3 oceanColor = mix(
     oceanDeep,
@@ -133,20 +133,20 @@ void main() {
   oceanColor = mix(
     oceanColor,
     coastal,
-    smoothstep(0.45, 0.72, continentalDetail) * 0.50
+    smoothstep(0.45, 0.72, continentalDetail) * 0.40
   );
   oceanColor = mix(
     oceanColor,
     shallow,
-    smoothstep(0.60, 0.85, continentalDetail) * 0.35
+    smoothstep(0.60, 0.85, continentalDetail) * 0.25
   );
 
-  // Land colors — deep emerald to pale green.
-  vec3 landLow = vec3(0.100, 0.300, 0.180);
-  vec3 landMid = vec3(0.180, 0.450, 0.280);
-  vec3 landHigh = vec3(0.300, 0.600, 0.380);
-  vec3 mountainColor = vec3(0.600, 0.750, 0.550);
-  vec3 iceColor = vec3(0.880, 0.940, 0.960);
+  // Land colors — natural Earth greens and browns, not emerald.
+  vec3 landLow = vec3(0.180, 0.260, 0.150);
+  vec3 landMid = vec3(0.280, 0.380, 0.220);
+  vec3 landHigh = vec3(0.400, 0.480, 0.320);
+  vec3 mountainColor = vec3(0.550, 0.580, 0.540);
+  vec3 iceColor = vec3(0.920, 0.960, 0.980);
 
   vec3 landColor = mix(
     landLow,
@@ -156,12 +156,12 @@ void main() {
   landColor = mix(
     landColor,
     landHigh,
-    smoothstep(0.48, 0.78, elevation) * 0.65
+    smoothstep(0.48, 0.78, elevation) * 0.60
   );
   landColor = mix(
     landColor,
     mountainColor,
-    smoothstep(0.70, 0.90, elevation) * 0.55
+    smoothstep(0.70, 0.90, elevation) * 0.50
   );
 
   // Crater coloration — darker spots.
@@ -237,11 +237,11 @@ void main() {
     3.0
   );
 
-  // Luminous blue-cyan atmospheric rim.
-  vec3 atmosphereColor = vec3(0.200, 0.700, 0.950);
+  // Subtle Earth-like atmospheric rim.
+  vec3 atmosphereColor = vec3(0.400, 0.600, 0.850);
 
   color *= lighting;
-  color += atmosphereColor * fresnel * 0.35;
+  color += atmosphereColor * fresnel * 0.22;
 
   gl_FragColor = vec4(color, 1.0);
 }
