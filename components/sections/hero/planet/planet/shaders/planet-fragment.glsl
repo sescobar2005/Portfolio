@@ -81,18 +81,19 @@ vec2 domainWarp(vec2 p) {
 
 // ── Biome color palette ──────────────────────────────────────────────
 // Deep oceans
-const vec3 OCEAN_ABYSSAL = vec3(0.024, 0.036, 0.078);  // #061a32
-const vec3 OCEAN_DEEP    = vec3(0.028, 0.070, 0.100);  // #0b3550
-const vec3 OCEAN         = vec3(0.071, 0.095, 0.130);  // #12617a
-const vec3 OCEAN_TURQ    = vec3(0.141, 0.608, 0.608);  // #249b9b
-const vec3 OCEAN_SHALLOW = vec3(0.392, 0.788, 0.733);  // #64c9bb
+const vec3 OCEAN_ABYSSAL = vec3(0.012, 0.063, 0.122);  // #03101f
+const vec3 OCEAN_DEEP    = vec3(0.024, 0.114, 0.196);  // #061d32
+const vec3 OCEAN         = vec3(0.039, 0.208, 0.314);  // #0a3550
+const vec3 OCEAN_TURQ    = vec3(0.071, 0.376, 0.471);  // #126078
+const vec3 OCEAN_SHALLOW = vec3(0.145, 0.553, 0.569);  // #258d91
 
 // Forest & vegetation
-const vec3 FOREST_DEEP   = vec3(0.090, 0.235, 0.196);  // #173c32
-const vec3 FOREST_EMERALD= vec3(0.157, 0.420, 0.302);  // #286b4d
-const vec3 FOREST_GREEN  = vec3(0.239, 0.525, 0.357);  // #3d865b
-const vec3 FOREST_OLIVE  = vec3(0.471, 0.525, 0.325);  // #788653
-const vec3 FOREST_MUTED  = vec3(0.627, 0.651, 0.427);  // #a0a66d
+const vec3 FOREST_DEEP   = vec3(0.063, 0.184, 0.161);  // #102f29
+const vec3 FOREST_EMERALD= vec3(0.098, 0.275, 0.220);  // #194638
+const vec3 FOREST_GREEN  = vec3(0.157, 0.420, 0.302);  // #286b4d
+const vec3 FOREST_OLIVE  = vec3(0.212, 0.525, 0.357);  // #36865b
+const vec3 FOREST_MUTED  = vec3(0.388, 0.525, 0.353);  // #63865a
+const vec3 FOREST_DARKER = vec3(0.490, 0.537, 0.345);  // #7d8958
 
 // Mountains & rocky terrain
 const vec3 MOUNTAIN_SLATE  = vec3(0.224, 0.267, 0.290);  // #39444a
@@ -220,6 +221,11 @@ void main() {
   float moisture = fbm2(terrainPosition.xy * 0.9 + dw * 0.4, 4);
   moisture = smoothstep(0.35, 0.65, moisture);
 
+  // Vegetation texture: multi-frequency noise variation for natural detail
+  float vegFine = noise(terrainPosition * 22.0);
+  float vegMid  = noise(terrainPosition * 8.0);
+  float vegVariation = vegFine * 0.5 + vegMid * 0.5;
+
   // Desert likelihood: dry (low moisture) + mid-to-high elevation
   float desertFactor = (1.0 - moisture) * smoothstep(0.40, 0.75, elevation);
 
@@ -229,19 +235,29 @@ void main() {
   // Forest factor: moisture + lower-to-mid elevation
   float forestFactor = moisture * (1.0 - mountainFactor) * (1.0 - desertFactor);
 
-  // Base terrain: forest at lower elevations
-  vec3 landColor = mix(
+  // Base terrain: forest with multi-shade vegetation texture
+  vec3 forestBase = mix(
     FOREST_DEEP,
     FOREST_EMERALD,
     smoothstep(0.20, 0.55, elevation)
   );
-
-  // Apply desert where dry and elevated
-  landColor = mix(
-    landColor,
-    mix(DESERT_OCHRE, DESERT_SANDSTONE, smoothstep(0.3, 0.7, elevation)),
-    desertFactor * 0.85
+  forestBase = mix(
+    forestBase,
+    FOREST_GREEN,
+    smoothstep(0.40, 0.70, elevation) * forestFactor * 0.4
   );
+  forestBase = mix(
+    forestBase,
+    FOREST_OLIVE,
+    vegVariation * moisture * 0.35
+  );
+  forestBase = mix(
+    forestBase,
+    FOREST_MUTED,
+    (1.0 - vegVariation) * (1.0 - moisture) * 0.25
+  );
+
+  vec3 landColor = forestBase;
 
   // Apply mountain stone at high elevations
   landColor = mix(
