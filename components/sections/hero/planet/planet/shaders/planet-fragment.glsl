@@ -119,11 +119,11 @@ void main() {
 
   float craters = craterField(direction * 34.0);
 
-  // Ocean colors — deep Earth blue, less turquoise.
-  vec3 oceanDeep = vec3(0.010, 0.025, 0.060);
-  vec3 ocean = vec3(0.020, 0.060, 0.140);
-  vec3 coastal = vec3(0.040, 0.100, 0.180);
-  vec3 shallow = vec3(0.080, 0.160, 0.240);
+  // Ocean colors — deep Earth blue, natural and subdued.
+  vec3 oceanDeep = vec3(0.008, 0.020, 0.050);
+  vec3 ocean = vec3(0.015, 0.045, 0.110);
+  vec3 coastal = vec3(0.030, 0.080, 0.150);
+  vec3 shallow = vec3(0.060, 0.130, 0.200);
 
   vec3 oceanColor = mix(
     oceanDeep,
@@ -133,20 +133,20 @@ void main() {
   oceanColor = mix(
     oceanColor,
     coastal,
-    smoothstep(0.45, 0.72, continentalDetail) * 0.40
+    smoothstep(0.45, 0.72, continentalDetail) * 0.35
   );
   oceanColor = mix(
     oceanColor,
     shallow,
-    smoothstep(0.60, 0.85, continentalDetail) * 0.25
+    smoothstep(0.60, 0.85, continentalDetail) * 0.20
   );
 
-  // Land colors — purple/violet palette, not emerald.
-  vec3 landLow = vec3(0.120, 0.080, 0.200);
-  vec3 landMid = vec3(0.220, 0.160, 0.340);
-  vec3 landHigh = vec3(0.380, 0.280, 0.480);
-  vec3 mountainColor = vec3(0.500, 0.420, 0.550);
-  vec3 iceColor = vec3(0.950, 0.920, 0.980);
+  // Land colors — natural earth tones: olive greens, browns, stone greys.
+  vec3 landLow = vec3(0.180, 0.220, 0.160);
+  vec3 landMid = vec3(0.280, 0.320, 0.240);
+  vec3 landHigh = vec3(0.400, 0.440, 0.340);
+  vec3 mountainColor = vec3(0.520, 0.500, 0.460);
+  vec3 iceColor = vec3(0.900, 0.920, 0.940);
 
   vec3 landColor = mix(
     landLow,
@@ -237,8 +237,8 @@ void main() {
     3.0
   );
 
-  // Subtle violet atmospheric rim complementing the purple planet.
-  vec3 atmosphereColor = vec3(0.350, 0.450, 0.800);
+  // Subtle Earth-like atmospheric rim.
+  vec3 atmosphereColor = vec3(0.300, 0.500, 0.750);
 
   color *= lighting;
   color += atmosphereColor * fresnel * 0.22;
