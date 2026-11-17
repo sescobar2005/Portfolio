@@ -27,7 +27,6 @@ export default function RingHalf({
   return (
     <mesh
       geometry={geometry}
-      rotation={[-Math.PI / 2, 0, 0]}
     >
       <shaderMaterial
         vertexShader={`
