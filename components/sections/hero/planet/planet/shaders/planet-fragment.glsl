@@ -11,6 +11,7 @@ varying vec3 vPosition;
 varying vec3 vNormal;
 varying vec3 vViewPosition;
 
+// ── Hash & noise ─────────────────────────────────────────────────────
 float hash(vec3 p) {
   p = fract(p * 0.3183099 + vec3(0.1));
   p *= 17.0;
@@ -37,18 +38,79 @@ float noise(vec3 p) {
   );
 }
 
-float fbm(vec3 p) {
+float fbm(vec3 p, int octaves) {
+  float value = 0.0;
+  float amplitude = 0.5;
+  float frequency = 1.0;
+
+  for (int i = 0; i < octaves; i++) {
+    value += noise(p * frequency) * amplitude;
+    p *= 2.0;
+    amplitude *= 0.5;
+    frequency *= 2.0;
+  }
+
+  return value;
+}
+
+float fbm2(vec2 p, int octaves) {
   float value = 0.0;
   float amplitude = 0.5;
 
-  for (int i = 0; i < 5; i++) {
-    value += noise(p) * amplitude;
+  for (int i = 0; i < octaves; i++) {
+    value += noise(vec3(p, 0.0)) * amplitude;
     p *= 2.0;
     amplitude *= 0.5;
   }
 
   return value;
 }
+
+// ── Domain warp ──────────────────────────────────────────────────────
+vec2 domainWarp(vec2 p) {
+  vec2 q = vec2(
+    fbm2(p + vec2(0.0, 0.0), 4),
+    fbm2(p + vec2(5.2, 1.3), 4)
+  );
+  vec2 r = vec2(
+    fbm2(p + 4.0 * q + vec2(1.7, 9.2), 4),
+    fbm2(p + 4.0 * q + vec2(8.3, 2.8), 4)
+  );
+  return p + r;
+}
+
+// ── Biome color palette ──────────────────────────────────────────────
+// Deep oceans
+const vec3 OCEAN_ABYSSAL = vec3(0.024, 0.036, 0.078);  // #061a32
+const vec3 OCEAN_DEEP    = vec3(0.028, 0.070, 0.100);  // #0b3550
+const vec3 OCEAN         = vec3(0.071, 0.095, 0.130);  // #12617a
+const vec3 OCEAN_TURQ    = vec3(0.141, 0.608, 0.608);  // #249b9b
+const vec3 OCEAN_SHALLOW = vec3(0.392, 0.788, 0.733);  // #64c9bb
+
+// Forest & vegetation
+const vec3 FOREST_DEEP   = vec3(0.090, 0.235, 0.196);  // #173c32
+const vec3 FOREST_EMERALD= vec3(0.157, 0.420, 0.302);  // #286b4d
+const vec3 FOREST_GREEN  = vec3(0.239, 0.525, 0.357);  // #3d865b
+const vec3 FOREST_OLIVE  = vec3(0.471, 0.525, 0.325);  // #788653
+const vec3 FOREST_MUTED  = vec3(0.627, 0.651, 0.427);  // #a0a66d
+
+// Mountains & rocky terrain
+const vec3 MOUNTAIN_SLATE  = vec3(0.224, 0.267, 0.290);  // #39444a
+const vec3 MOUNTAIN_STONE  = vec3(0.400, 0.451, 0.435);  // #66736f
+const vec3 MOUNTAIN_MINERAL= vec3(0.522, 0.545, 0.502);  // #858b80
+const vec3 MOUNTAIN_LIGHT  = vec3(0.702, 0.710, 0.647);  // #b3b5a5
+const vec3 MOUNTAIN_DEPOSIT= vec3(0.655, 0.486, 0.333);  // #a77c55
+
+// Desert & mineral regions
+const vec3 DESERT_OCHRE   = vec3(0.659, 0.529, 0.333);  // #a88755
+const vec3 DESERT_SANDSTONE= vec3(0.741, 0.604, 0.412);  // #bd9a69
+const vec3 DESERT_MINERAL = vec3(0.400, 0.325, 0.247);  // #66533f
+const vec3 DESERT_RUST    = vec3(0.596, 0.400, 0.310);  // #98664f
+
+// Ice & high-altitude
+const vec3 ICE_GLACIER = vec3(0.867, 0.914, 0.910);  // #dce9e8
+const vec3 ICE_PALE    = vec3(0.714, 0.831, 0.839);  // #b6d4d7
+const vec3 ICE_COLD    = vec3(0.471, 0.620, 0.682);  // #789eae
 
 // Procedural craters with raised rims and recessed interiors.
 float craterField(vec3 p) {
@@ -96,16 +158,16 @@ void main() {
   vec3 terrainPosition = direction * 5.0;
 
   terrainPosition += vec3(
-    fbm(terrainPosition * 1.4),
-    fbm(terrainPosition * 1.4 + 8.3),
-    fbm(terrainPosition * 1.4 + 3.7)
+    fbm(terrainPosition * 1.4, 5),
+    fbm(terrainPosition * 1.4 + 8.3, 5),
+    fbm(terrainPosition * 1.4 + 3.7, 5)
   ) * 0.8;
 
   terrainPosition += vec3(time, 0.0, 0.0);
 
   // Natural continental shapes.
-  float continents = fbm(terrainPosition * 1.35);
-  float continentalDetail = fbm(terrainPosition * 3.2);
+  float continents = fbm(terrainPosition * 1.35, 5);
+  float continentalDetail = fbm(terrainPosition * 3.2, 5);
 
   float landMask = smoothstep(
     0.42,
@@ -114,8 +176,8 @@ void main() {
   );
 
   // Geological surface variation.
-  float mountains = fbm(terrainPosition * 5.0);
-  float fineDetail = fbm(terrainPosition * 14.0);
+  float mountains = fbm(terrainPosition * 5.0, 5);
+  float fineDetail = fbm(terrainPosition * 14.0, 5);
   float elevation = mountains * 0.65 + fineDetail * 0.35;
 
   float craters = craterField(direction * 34.0);
