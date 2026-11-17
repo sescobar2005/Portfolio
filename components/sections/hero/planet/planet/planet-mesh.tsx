@@ -13,8 +13,8 @@ import fragmentShader from './shaders/planet-fragment.glsl';
 const invRingTilt = new THREE.Matrix3();
 invRingTilt.set(
   1, 0, 0,
-  0, 0, 1,
-  0, -1, 0,
+  0, 0, -1,
+  0, 1, 0,
 );
 
 export default function PlanetMesh() {
