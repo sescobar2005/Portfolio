@@ -1,0 +1,50 @@
+.spaceStation {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  min-height: 100vh;
+  padding: 8rem clamp(1.5rem, 8vw, 8rem);
+
+  background:
+    radial-gradient(
+      ellipse at 80% 30%,
+      rgba(57, 139, 255, 0.06),
+      transparent 50%
+    ),
+    #050914;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+}
+
+/* CONTENT */
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 8vw, 8rem);
+
+  margin-top: 4rem;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .spaceStation {
+    padding-block: 6rem;
+  }
+}

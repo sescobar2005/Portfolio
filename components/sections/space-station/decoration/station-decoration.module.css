@@ -1,0 +1,369 @@
+.decoration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 460px;
+  height: 460px;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+/* ORBITAL RING */
+
+.orbitalRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid rgba(89, 199, 232, 0.15);
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%) rotate(15deg);
+
+  animation: rotate-orbit 25s linear infinite;
+}
+
+/* STATION CORE */
+
+.stationCore {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 120px;
+  height: 120px;
+
+  border: 1px solid rgba(57, 139, 255, 0.25);
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(
+    circle at 35% 30%,
+    rgba(57, 139, 255, 0.15),
+    rgba(5, 9, 20, 0.8) 70%
+  );
+
+  box-shadow:
+    0 0 30px rgba(57, 139, 255, 0.1),
+    inset 0 0 20px rgba(57, 139, 255, 0.1);
+}
+
+/* DOCKING ARMS */
+
+.dockingArm,
+.dockingArmAlt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 200px;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(89, 199, 232, 0.35),
+    transparent
+  );
+
+  transform: translate(-50%, -50%);
+}
+
+.dockingArm {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.dockingArmAlt {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* MODULES */
+
+.module {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 16px;
+  height: 16px;
+
+  border: 1px solid rgba(57, 139, 255, 0.4);
+  border-radius: 2px;
+
+  background: rgba(57, 139, 255, 0.1);
+
+  transform: translate(-50%, -50%);
+}
+
+.moduleTop {
+  transform: translate(-50%, -50%) translatey(-140px) rotate(90deg);
+}
+
+.moduleRight {
+  transform: translate(-50%, -50%) translatex(140px);
+}
+
+.moduleBottom {
+  transform: translate(-50%, -50%) translatey(140px) rotate(-90deg);
+}
+
+.moduleLeft {
+  transform: translate(-50%, -50%) translatex(-140px);
+}
+
+/* BEACONS */
+
+.beacon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #59c7e8;
+  box-shadow: 0 0 10px rgba(89, 199, 232, 0.6);
+
+  transform: translate(-50%, -50%);
+}
+
+.beaconTop {
+  transform: translate(-50%, -50%) translatey(-160px);
+  animation: pulse-beacon 3s ease-in-out infinite;
+}
+
+.beaconRight {
+  transform: translate(-50%, -50%) translatex(160px);
+  animation: pulse-beacon 3s ease-in-out infinite 0.7s;
+}
+
+.beaconBottom {
+  transform: translate(-50%, -50%) translatey(160px);
+  animation: pulse-beacon 3s ease-in-out infinite 1.4s;
+}
+
+.beaconLeft {
+  transform: translate(-50%, -50%) translatex(-160px);
+  animation: pulse-beacon 3s ease-in-out infinite 2.1s;
+}
+
+/* GRID LINES */
+
+.gridLine {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  border: 1px solid rgba(125, 166, 210, 0.08);
+
+  transform: translate(-50%, -50%);
+}
+
+.lineHorizontal {
+  width: 460px;
+  height: 0;
+  border-top-width: 1px;
+}
+
+.lineVertical {
+  width: 0;
+  height: 460px;
+  border-left-width: 1px;
+}
+
+/* SCAN LINE */
+
+.scanLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(57, 139, 255, 0.4),
+    transparent
+  );
+
+  opacity: 0.5;
+
+  transform: translatey(-50%);
+
+  animation: scan 4s linear infinite;
+}
+
+/* ANIMATIONS */
+
+@keyframes rotate-orbit {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes pulse-beacon {
+  0%,
+  100% {
+    opacity: 0.4;
+    box-shadow: 0 0 10px rgba(89, 199, 232, 0.4);
+  }
+
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(89, 199, 232, 0.8);
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .decoration {
+    width: 320px;
+    height: 320px;
+  }
+
+  .dockingArm,
+  .dockingArmAlt {
+    width: 140px;
+  }
+
+  .moduleTop {
+    transform: translate(-50%, -50%) translatey(-100px) rotate(90deg);
+  }
+
+  .moduleRight {
+    transform: translate(-50%, -50%) translatex(100px);
+  }
+
+  .moduleBottom {
+    transform: translate(-50%, -50%) translatey(100px) rotate(-90deg);
+  }
+
+  .moduleLeft {
+    transform: translate(-50%, -50%) translatex(-100px);
+  }
+
+  .beaconTop {
+    transform: translate(-50%, -50%) translatey(-115px);
+  }
+
+  .beaconRight {
+    transform: translate(-50%, -50%) translatex(115px);
+  }
+
+  .beaconBottom {
+    transform: translate(-50%, -50%) translatey(115px);
+  }
+
+  .beaconLeft {
+    transform: translate(-50%, -50%) translatex(-115px);
+  }
+
+  .lineHorizontal {
+    width: 320px;
+  }
+
+  .lineVertical {
+    height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .decoration {
+    width: 260px;
+    height: 260px;
+  }
+
+  .dockingArm,
+  .dockingArmAlt {
+    width: 110px;
+  }
+
+  .moduleTop {
+    transform: translate(-50%, -50%) translatey(-85px) rotate(90deg);
+  }
+
+  .moduleRight {
+    transform: translate(-50%, -50%) translatex(85px);
+  }
+
+  .moduleBottom {
+    transform: translate(-50%, -50%) translatey(85px) rotate(-90deg);
+  }
+
+  .moduleLeft {
+    transform: translate(-50%, -50%) translatex(-85px);
+  }
+
+  .beaconTop {
+    transform: translate(-50%, -50%) translatey(-98px);
+  }
+
+  .beaconRight {
+    transform: translate(-50%, -50%) translatex(98px);
+  }
+
+  .beaconBottom {
+    transform: translate(-50%, -50%) translatey(98px);
+  }
+
+  .beaconLeft {
+    transform: translate(-50%, -50%) translatex(-98px);
+  }
+
+  .lineHorizontal {
+    width: 260px;
+  }
+
+  .lineVertical {
+    height: 260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitalRing {
+    animation: none;
+  }
+
+  .beacon {
+    animation: none;
+    opacity: 0.4;
+  }
+
+  .scanLine {
+    animation: none;
+    opacity: 0.3;
+  }
+}
