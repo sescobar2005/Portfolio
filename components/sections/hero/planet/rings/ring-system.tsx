@@ -1,7 +1,5 @@
 'use client';
 
-import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
 import * as THREE from 'three';
 
 import RingHalf from './ring-half';
@@ -42,20 +40,11 @@ function RingBand({
 }
 
 export default function RingSystem() {
-  const ringSystem = useRef<THREE.Group>(null);
-
-  
-  useFrame((state, delta) => {
-    if (!ringSystem.current) return;
-
-    ringSystem.current.rotation.y += delta * 0.12;
-  });
-
+  // Fixed equatorial orientation: flat in the XZ plane, perpendicular to the
+  // planet's axial rotation axis (Y). Inherits the parent group's axial spin
+  // so rings stay aligned with the planet's equator.
   return (
-    <group
-      ref={ringSystem}
-      rotation={[1.12, 0.12, -0.28]}
-    >
+    <group rotation={[-Math.PI / 2, 0, 0]}>
       <RingBand
         innerRadius={2.45}
         outerRadius={2.72}
