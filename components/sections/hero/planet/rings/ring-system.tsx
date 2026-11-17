@@ -59,29 +59,29 @@ export default function RingSystem() {
       <RingBand
         innerRadius={2.45}
         outerRadius={2.72}
-        color="#536a9e"
-        opacity={0.38}
+        color="#3d5a80"
+        opacity={0.40}
       />
 
       <RingBand
         innerRadius={2.82}
         outerRadius={3.18}
-        color="#9aadd4"
-        opacity={0.32}
+        color="#8fb4d8"
+        opacity={0.30}
       />
 
       <RingBand
         innerRadius={3.22}
         outerRadius={3.42}
-        color="#718bc1"
+        color="#5a7fa8"
         opacity={0.24}
       />
 
       <RingBand
         innerRadius={3.50}
         outerRadius={3.58}
-        color="#b5c8ef"
-        opacity={0.18}
+        color="#a8c4e8"
+        opacity={0.14}
       />
 
       <RingParticles />
