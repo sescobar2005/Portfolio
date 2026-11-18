@@ -13,11 +13,12 @@ export default function GalaxyScene() {
           dpr={[1, 1.5]}
           gl={{
             antialias: true,
-            alpha: false,
+            alpha: true,
             powerPreference: 'high-performance',
+            preserveDrawingBuffer: true,
           }}
           frameloop="always"
-          style={{ width: '100%', height: '100%', display: 'block' }}
+          style={{ width: '100%', height: '100%', display: 'block', backgroundColor: '#050914' }}
         >
           <color attach="background" args={['#050914']} />
           <fog args={['#050914', 100, 800]} />
