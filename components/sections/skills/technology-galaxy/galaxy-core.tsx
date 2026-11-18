@@ -9,48 +9,50 @@ export default function GalaxyCore() {
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.01;
+      meshRef.current.rotation.y += delta * 0.015;
       meshRef.current.rotation.x += delta * 0.005;
     }
   });
 
   return (
     <group>
-      {/* Núcleo brillante central */}
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[12, 64, 64]} />
+      {/* Outer glow sphere */}
+      <mesh>
+        <sphereGeometry args={[22, 64, 64]} />
         <meshBasicMaterial
-          color="#ffffff"
+          color="#1a1a2e"
+          transparent
+          opacity={0.15}
+          side={THREE.DoubleSide}
           toneMapped={false}
         />
       </mesh>
-      {/* Capa intermedia */}
+      {/* Inner bright core */}
       <mesh>
-        <sphereGeometry args={[10, 64, 64]} />
+        <sphereGeometry args={[8, 64, 64]} />
         <meshBasicMaterial
           color="#ffd700"
           transparent
-          opacity={0.6}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Núcleo interno brillante */}
-      <mesh>
-        <sphereGeometry args={[6, 64, 64]} />
-        <meshBasicMaterial
-          color="#ffa500"
-          transparent
           opacity={0.8}
+          side={THREE.DoubleSide}
           toneMapped={false}
         />
       </mesh>
-      {/* Núcleo más brillante */}
+      {/* Inner bright core center */}
       <mesh>
-        <sphereGeometry args={[3, 64, 64]} />
+        <sphereGeometry args={[5, 64, 64]} />
         <meshBasicMaterial
           color="#ffffff"
           transparent
-          opacity={1}
+          opacity={0.95}
+          toneMapped={false}
+        />
+      </mesh>
+      {/* Tiny bright center */}
+      <mesh>
+        <sphereGeometry args={[1.5, 32, 32]} />
+        <meshBasicMaterial
+          color="#ffffff"
           toneMapped={false}
         />
       </mesh>

@@ -14,13 +14,13 @@ export default function GalaxyDust() {
     }
   });
 
-  const particleCount = 1500;
+  const particleCount = 3000;
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
   const sizes = new Float32Array(particleCount);
 
   for (let i = 0; i < particleCount * 3; i += 3) {
-    positions[i] = (Math.random() - 0.5) * 200;
+    positions[i] = (Math.random() - 0.5) * 250;
     positions[i + 1] = (Math.random() - 0.5) * 80;
     positions[i + 2] = (Math.random() - 0.5) * 250;
 

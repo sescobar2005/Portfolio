@@ -11,7 +11,7 @@ export default function TechnologySatellites() {
 
   useFrame((state, delta) => {
     if (meshRef.current) {
-      meshRef.current.rotation.y += delta * 0.03;
+      meshRef.current.rotation.y += delta * 0.02;
     }
   });
 
@@ -27,9 +27,9 @@ export default function TechnologySatellites() {
     <group ref={(el) => (meshRef.current = el as unknown as THREE.Group)}>
       {ALL_TECHNOLOGIES.map((tech, index) => {
         const angleDeg = (index / ALL_TECHNOLOGIES.length) * 360;
-        const radius = 140 + Math.sin(index * 0.7) * 30;
+        const radius = 180 + Math.sin(index * 0.7) * 40;
         const x = Math.cos((angleDeg * Math.PI) / 180) * radius;
-        const y = Math.sin((angleDeg * Math.PI) / 180) * radius * 0.5;
+        const y = Math.sin((angleDeg * Math.PI) / 180) * radius * 0.4;
         const z = Math.cos((angleDeg * Math.PI) / 180) * radius * 0.3;
 
         return (
@@ -37,11 +37,12 @@ export default function TechnologySatellites() {
             key={tech.name}
             position={[x, y, z]}
           >
-            <planeGeometry args={[10, 10]} />
+            <planeGeometry args={[12, 10]} />
             <meshBasicMaterial
               map={new THREE.TextureLoader().load(tech.logoUrl)}
               transparent
               toneMapped={false}
+              side={THREE.DoubleSide}
             />
           </mesh>
         );
