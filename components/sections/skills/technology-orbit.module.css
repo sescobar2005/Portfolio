@@ -1,0 +1,147 @@
+.orbitSection {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem clamp(1.5rem, 8vw, 8rem);
+}
+
+.header {
+  max-width: 700px;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.title {
+  color: #e8eef8;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  color: #8999b2;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.orbitWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.categorySelector {
+  display: flex;
+  gap: 1rem;
+}
+
+.categoryButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.25rem;
+  border: 1px solid rgba(57, 139, 255, 0.18);
+  border-radius: 4px;
+  background: transparent;
+  color: #8999b2;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition:
+    border-color 200ms ease,
+    color 200ms ease,
+    background 200ms ease;
+}
+
+.categoryButton:hover {
+  border-color: rgba(57, 139, 255, 0.4);
+  color: #e8eef8;
+}
+
+.categoryButtonActive {
+  background: rgba(57, 139, 255, 0.08);
+  border-color: rgba(57, 139, 255, 0.4);
+  color: #e8eef8;
+}
+
+.orbitVisualization {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+
+.orbitRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgba(57, 139, 255, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.orbitGroup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.orbitDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color);
+  box-shadow: 0 0 10px var(--color);
+  transform: translate(-50%, -50%);
+}
+
+.orbitLabel {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -120%);
+  color: #e8eef8;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .orbitVisualization {
+    width: 220px;
+    height: 220px;
+  }
+
+  .orbitLabel {
+    font-size: 0.65rem;
+    top: -110%;
+  }
+}
+
+@media (max-width: 600px) {
+  .categorySelector {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .orbitVisualization {
+    width: 200px;
+    height: 200px;
+  }
+
+  .orbitLabel {
+    font-size: 0.6rem;
+    top: -105%;
+  }
+}
