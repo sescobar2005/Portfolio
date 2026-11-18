@@ -1,6 +1,6 @@
 .introduction {
   width: 100%;
-  max-width: 520px;
+  max-width: 640px;
 }
 
 /* SECTION LABEL */
@@ -9,7 +9,7 @@
   display: inline-block;
   margin-bottom: 1.5rem;
 
-  color: #a78bfa;
+  color: #59c7e8;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -20,7 +20,7 @@
 .title {
   margin-bottom: 1.75rem;
 
-  color: #f8fafc;
+  color: #e8eef8;
   font-size: clamp(2rem, 3.5vw, 3rem);
   font-weight: 600;
 
@@ -29,7 +29,7 @@
 }
 
 .title span {
-  color: #60a5fa;
+  color: #398bff;
 }
 
 /* DESCRIPTION */
@@ -67,7 +67,7 @@
 
   background: linear-gradient(
     to right,
-    #60a5fa,
+    #398bff,
     transparent
   );
 }

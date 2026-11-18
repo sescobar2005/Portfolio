@@ -1,0 +1,19 @@
+.informationGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .informationGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .informationGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}

@@ -13,7 +13,7 @@
 
   margin-bottom: 1.75rem;
 
-  color: #93c5fd;
+  color: #59c7e8;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.22em;
@@ -25,14 +25,14 @@
 
   border-radius: 50%;
 
-  background: #22d3ee;
-  box-shadow: 0 0 12px #22d3ee;
+  background: #398bff;
+  box-shadow: 0 0 12px #398bff;
 }
 
 /* TITLE */
 
 .title {
-  color: #f8fafc;
+  color: #e8eef8;
 
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   font-weight: 700;
@@ -41,18 +41,24 @@
   line-height: 1.1;
 }
 
-.title span {
-  color: #93c5fd;
-}
-
 /* SUBTITLE */
 
 .subtitle {
+  color: #398bff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+
+  margin-bottom: 1rem;
+}
+
+/* DESCRIPTION */
+
+.description {
   max-width: 600px;
-  margin-top: 1.25rem;
 
-  color: #94a3b8;
-
+  color: #8999b2;
   font-size: 1.05rem;
   line-height: 1.8;
 }

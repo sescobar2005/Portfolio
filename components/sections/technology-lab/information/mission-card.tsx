@@ -1,4 +1,4 @@
-import styles from './information.module.css';
+import styles from './information-grid.module.css';
 
 export default function MissionCard() {
   return (

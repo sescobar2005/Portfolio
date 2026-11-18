@@ -1,4 +1,4 @@
-.about {
+.technologyLab {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -9,10 +9,10 @@
   background:
     radial-gradient(
       ellipse at 85% 50%,
-      rgba(59, 130, 246, 0.07),
-      transparent 45%
+      rgba(57, 139, 255, 0.06),
+      transparent 50%
     ),
-    #070b1b;
+    #050914;
 }
 
 .container {
@@ -30,11 +30,13 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(3rem, 8vw, 8rem);
+
+  margin-top: 4rem;
 }
 
 /* FOOTER COORDINATES */
 
-.coordinates {
+.labFooter {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -43,9 +45,9 @@
   margin-top: 5rem;
   padding-top: 1.5rem;
 
-  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  border-top: 1px solid rgba(125, 166, 210, 0.16);
 
-  color: #64748b;
+  color: #526782;
   font-size: 0.65rem;
   letter-spacing: 0.13em;
 }
@@ -60,11 +62,11 @@
 }
 
 @media (max-width: 600px) {
-  .about {
+  .technologyLab {
     padding-block: 6rem;
   }
 
-  .coordinates {
+  .labFooter {
     flex-direction: column;
     gap: 0.85rem;
   }
