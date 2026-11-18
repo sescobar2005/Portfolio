@@ -4,11 +4,23 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 
+const GALAXY_VERTEX_SHADER = `
+  varying vec3 vColor;
+  attribute float size;
+
+  void main() {
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    gl_Position = projectionMatrix * mvPosition;
+    gl_PointSize = size * (30.0 / -mvPosition.z);
+    vColor = color;
+  }
+`;
+
 export default function GalaxyArms() {
   const meshRef = useRef<THREE.Points>(null);
 
   const armCount = 5;
-  const pointsPerArm = 600;
+  const pointsPerArm = 500;
   const totalPoints = armCount * pointsPerArm;
 
   const positions = new Float32Array(totalPoints * 3);
@@ -16,11 +28,11 @@ export default function GalaxyArms() {
   const sizes = new Float32Array(totalPoints);
 
   const armColors = [
-    new THREE.Color('#398bff'), // electric blue
-    new THREE.Color('#59c7e8'), // cyan
-    new THREE.Color('#a78bfa'), // violet
-    new THREE.Color('#f472b6'), // magenta-pink
-    new THREE.Color('#fbbf24'), // warm amber
+    new THREE.Color('#398bff'),
+    new THREE.Color('#59c7e8'),
+    new THREE.Color('#a78bfa'),
+    new THREE.Color('#f472b6'),
+    new THREE.Color('#fbbf24'),
   ];
 
   for (let arm = 0; arm < armCount; arm++) {
@@ -29,21 +41,17 @@ export default function GalaxyArms() {
     for (let i = 0; i < pointsPerArm; i++) {
       const idx = (arm * pointsPerArm + i) * 3;
 
-      // Spiral radius grows outward - denser near center
       const radius = (i / pointsPerArm) * 180;
-
-      // Spiral angle with organic variation
       const angle = armAngle + (i / pointsPerArm) * Math.PI * 5 + Math.sin(i * 0.15) * 0.4;
 
       const x = Math.cos(angle) * radius;
-      const y = Math.sin(angle) * radius * 0.28; // Flatten into galactic plane
+      const y = Math.sin(angle) * radius * 0.28;
       const z = Math.sin(angle) * radius * 0.25;
 
       positions[idx] = x;
       positions[idx + 1] = y;
       positions[idx + 2] = z;
 
-      // Color gradient from center (bright) to outer (dimmer)
       const distanceFromCenter = radius / 180;
       const brightness = 1 - distanceFromCenter * 0.4;
 
@@ -51,7 +59,6 @@ export default function GalaxyArms() {
       colors[idx + 1] = armColors[arm].g * brightness;
       colors[idx + 2] = armColors[arm].b * brightness;
 
-      // Smaller particles toward edges, larger near center
       sizes[idx] = Math.random() * 0.8 + 0.3;
     }
   }
@@ -61,12 +68,10 @@ export default function GalaxyArms() {
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
   geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
-  const material = new THREE.PointsMaterial({
-    size: 0.5,
-    vertexColors: true,
+  const material = new THREE.ShaderMaterial({
+    vertexShader: galaxyVertexShader,
+    fragmentShader: galaxyFragmentShader,
     transparent: true,
-    opacity: 0.7,
-    sizeAttenuation: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });

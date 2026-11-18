@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 
 export default function GalaxyCore() {
-  const coreRef = useRef<THREE.Mesh>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
     if (meshRef.current) {
@@ -14,46 +14,43 @@ export default function GalaxyCore() {
     }
   });
 
-  const meshRef = useRef<THREE.Mesh>(null);
-
   return (
     <group>
-      {/* Outer glow - faint outer atmosphere */}
+      {/* Central bright core */}
+      <mesh ref={meshRef}>
+        <sphereGeometry args={[6, 64, 64]} />
+        <meshBasicMaterial
+          color="#fffef0"
+          toneMapped={false}
+        />
+      </mesh>
+      {/* Bright inner core glow */}
       <mesh>
-        <sphereGeometry args={[22, 64, 64]} />
+        <sphereGeometry args={[10, 64, 64]} />
         <meshBasicMaterial
           color="#ffd700"
           transparent
-          opacity={0.15}
-          side={THREE.DoubleSide}
+          opacity={0.7}
           toneMapped={false}
         />
       </mesh>
-      {/* Mid glow - brighter warm center */}
+      {/* Mid atmosphere */}
       <mesh>
-        <sphereGeometry args={[9, 64, 64]} />
+        <sphereGeometry args={[16, 64, 64]} />
         <meshBasicMaterial
-          color="#ffb347"
+          color="#ffa500"
           transparent
-          opacity={0.5}
+          opacity={0.4}
           toneMapped={false}
         />
       </mesh>
-      {/* Bright inner core */}
+      {/* Outer glow */}
       <mesh>
-        <sphereGeometry args={[5, 64, 64]} />
+        <sphereGeometry args={[22, 64, 64]} />
         <meshBasicMaterial
-          color="#fff0d9"
+          color="#ff8c00"
           transparent
-          opacity={0.8}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Brightest center point */}
-      <mesh>
-        <sphereGeometry args={[2, 64, 64]} />
-        <meshBasicMaterial
-          color="#ffffff"
+          opacity={0.2}
           toneMapped={false}
         />
       </mesh>
