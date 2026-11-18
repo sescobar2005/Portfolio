@@ -16,41 +16,42 @@ export default function GalaxyCore() {
 
   return (
     <group>
-      {/* Central bright core */}
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[6, 64, 64]} />
-        <meshBasicMaterial
-          color="#fffef0"
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Bright inner core glow */}
-      <mesh>
-        <sphereGeometry args={[10, 64, 64]} />
-        <meshBasicMaterial
-          color="#ffd700"
-          transparent
-          opacity={0.7}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Mid atmosphere */}
-      <mesh>
-        <sphereGeometry args={[16, 64, 64]} />
-        <meshBasicMaterial
-          color="#ffa500"
-          transparent
-          opacity={0.4}
-          toneMapped={false}
-        />
-      </mesh>
-      {/* Outer glow */}
+      {/* Outer glow - faint outer atmosphere */}
       <mesh>
         <sphereGeometry args={[22, 64, 64]} />
         <meshBasicMaterial
-          color="#ff8c00"
+          color="#fffef0"
           transparent
-          opacity={0.2}
+          opacity={0.15}
+          side={THREE.DoubleSide}
+          toneMapped={false}
+        />
+      </mesh>
+      {/* Mid glow - brighter warm center */}
+      <mesh>
+        <sphereGeometry args={[9, 64, 64]} />
+        <meshBasicMaterial
+          color="#ffd700"
+          transparent
+          opacity={0.5}
+          toneMapped={false}
+        />
+      </mesh>
+      {/* Bright inner core */}
+      <mesh>
+        <sphereGeometry args={[5, 64, 64]} />
+        <meshBasicMaterial
+          color="#fffef0"
+          transparent
+          opacity={0.8}
+          toneMapped={false}
+        />
+      </mesh>
+      {/* Brightest center point */}
+      <mesh>
+        <sphereGeometry args={[2.5, 64, 64]} />
+        <meshBasicMaterial
+          color="#ffffff"
           toneMapped={false}
         />
       </mesh>
