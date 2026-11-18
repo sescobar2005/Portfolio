@@ -1,0 +1,158 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* CATEGORY CARD */
+
+.category {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 2rem;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(125, 166, 210, 0.16);
+  border-radius: 10px;
+
+  background: rgba(16, 29, 48, 0.4);
+
+  transition:
+    border-color 300ms ease,
+    background 300ms ease,
+    transform 300ms ease;
+}
+
+.category:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(57, 139, 255, 0.35);
+
+  background: rgba(16, 29, 48, 0.55);
+}
+
+/* CATEGORY HEADER */
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.categoryNumber {
+  color: #398bff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.categoryCode {
+  color: #526782;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+}
+
+/* CATEGORY TITLE */
+
+.categoryTitle {
+  margin-bottom: 0.75rem;
+
+  color: #e8eef8;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* CATEGORY DESCRIPTION */
+
+.categoryDescription {
+  max-width: 400px;
+  margin-bottom: 1.5rem;
+
+  color: #8999b2;
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* TECHNOLOGY LIST */
+
+.technologyList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* TECHNOLOGY ITEM */
+
+.technologyItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.4rem 0.65rem;
+
+  border: 1px solid rgba(57, 139, 255, 0.18);
+  border-radius: 4px;
+
+  background: rgba(57, 139, 255, 0.06);
+
+  color: #93c5fd;
+  font-size: 0.65rem;
+  font-weight: 500;
+
+  transition:
+    border-color 200ms ease,
+    background 200ms ease;
+}
+
+.technologyItem:hover {
+  border-color: rgba(57, 139, 255, 0.35);
+  background: rgba(57, 139, 255, 0.12);
+}
+
+.technologyDot {
+  width: 4px;
+  height: 4px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #398bff;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .category {
+    padding: 1.5rem;
+  }
+
+  .categoryHeader {
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .category,
+  .technologyItem {
+    transition: none;
+  }
+}

@@ -1,17 +1,17 @@
 import styles from './skills.module.css';
 
 import SkillsHeader from './header/skills-header';
-import TechnologyGalaxy from './technology-galaxy/technology-galaxy';
+import TechnologyGrid from './technology-grid/technology-grid';
+import LabDecoration from './decoration/lab-decoration';
 
 export default function Skills() {
   return (
     <section id="skills" className={styles.skills}>
+      <LabDecoration />
+
       <div className={styles.container}>
         <SkillsHeader />
-
-        <div className={styles.content}>
-          <TechnologyGalaxy />
-        </div>
+        <TechnologyGrid />
 
         <footer className={styles.footer}>
           <span>END OF TECHNICAL INVENTORY</span>
