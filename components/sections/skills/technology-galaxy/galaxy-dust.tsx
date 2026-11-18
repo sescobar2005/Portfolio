@@ -14,21 +14,21 @@ export default function GalaxyDust() {
     }
   });
 
-  const particleCount = 3000;
+  const particleCount = 1500;
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
   const sizes = new Float32Array(particleCount);
 
   for (let i = 0; i < particleCount * 3; i += 3) {
-    positions[i] = (Math.random() - 0.5) * 250;
-    positions[i + 1] = (Math.random() - 0.5) * 100;
+    positions[i] = (Math.random() - 0.5) * 200;
+    positions[i + 1] = (Math.random() - 0.5) * 80;
     positions[i + 2] = (Math.random() - 0.5) * 250;
 
     colors[i] = 0.05;
     colors[i + 1] = 0.08;
     colors[i + 2] = 0.15;
 
-    sizes[i] = Math.random() * 4 + 2;
+    sizes[i] = Math.random() * 2 + 1;
   }
 
   const geometry = new THREE.BufferGeometry();
@@ -40,7 +40,7 @@ export default function GalaxyDust() {
     size: 0.5,
     vertexColors: true,
     transparent: true,
-    opacity: 0.3,
+    opacity: 0.15,
     sizeAttenuation: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,

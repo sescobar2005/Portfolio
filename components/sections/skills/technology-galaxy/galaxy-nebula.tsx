@@ -18,16 +18,16 @@ export default function GalaxyNebula() {
     }
   });
 
-  const particleCount = 3000;
+  const particleCount = 1500;
   const positions = new Float32Array(particleCount * 3);
   const sizes = new Float32Array(particleCount);
 
   for (let i = 0; i < particleCount * 3; i += 3) {
-    positions[i] = (Math.random() - 0.5) * 300;
-    positions[i + 1] = (Math.random() - 0.5) * 150;
-    positions[i + 2] = (Math.random() - 0.5) * 300;
+    positions[i] = (Math.random() - 0.5) * 200;
+    positions[i + 1] = (Math.random() - 0.5) * 100;
+    positions[i + 2] = (Math.random() - 0.5) * 200;
 
-    sizes[i] = Math.random() * 3 + 1;
+    sizes[i] = Math.random() * 2 + 1;
   }
 
   const geometry = new THREE.BufferGeometry();

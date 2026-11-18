@@ -14,20 +14,20 @@ export default function GalaxyParticles() {
     }
   });
 
-  const particleCount = 5000;
+  const particleCount = 1500;
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
   const sizes = new Float32Array(particleCount);
 
   for (let i = 0; i < particleCount * 3; i += 3) {
-    positions[i] = (Math.random() - 0.5) * 400;
-    positions[i + 1] = (Math.random() - 0.5) * 200;
+    positions[i] = (Math.random() - 0.5) * 200;
+    positions[i + 1] = (Math.random() - 0.5) * 100;
     positions[i + 2] = (Math.random() - 0.5) * 400;
 
-    const brightness = Math.random();
-    colors[i] = brightness;
-    colors[i + 1] = brightness * 0.8;
-    colors[i + 2] = brightness * 1.0;
+    const brightness = Math.random() * 0.4 + 0.1;
+    colors[i] = brightness * 0.3;
+    colors[i + 1] = brightness * 0.5;
+    colors[i + 2] = brightness * 0.7;
 
     sizes[i] = Math.random() * 1.5 + 0.3;
   }
@@ -38,10 +38,10 @@ export default function GalaxyParticles() {
   geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
   const material = new THREE.PointsMaterial({
-    size: 0.6,
+    size: 0.8,
     vertexColors: true,
     transparent: true,
-    opacity: 0.8,
+    opacity: 0.15,
     sizeAttenuation: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
