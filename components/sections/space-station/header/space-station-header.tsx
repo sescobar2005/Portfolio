@@ -1,17 +1,16 @@
 import styles from './space-station-header.module.css';
 
-export default function SpaceStationHeader() {
+export default function TechnologyLabHeader() {
   return (
     <header className={styles.header}>
       <p className={styles.eyebrow}>
         <span className={styles.statusDot} />
-        03 / ORBITAL FACILITY
+        01 / RESEARCH &amp; DEVELOPMENT
       </p>
 
-      <h2 className={styles.title}>
-        Space Station
-        <span>Orbital architecture.</span>
-      </h2>
+      <h1 className={styles.title}>
+        TECHNOLOGY LAB
+      </h1>
 
       <p className={styles.subtitle}>
         Systems designed for scale, reliability and maintainability. The
@@ -19,9 +18,9 @@ export default function SpaceStationHeader() {
       </p>
 
       <div className={styles.metadata}>
-        <span>SYSTEM: ORBITAL-03</span>
-        <span>STATUS: OPERATIONAL</span>
-        <span>SECTOR: BACKEND / ARCHITECTURE</span>
+        <span>SYSTEM: LAB-01</span>
+        <span>SECTOR: ENGINEERING</span>
+        <span>STATUS: ACTIVE</span>
       </div>
     </header>
   );

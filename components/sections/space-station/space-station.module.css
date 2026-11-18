@@ -1,4 +1,4 @@
-.spaceStation {
+.technologyLab {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -9,7 +9,7 @@
   background:
     radial-gradient(
       ellipse at 80% 30%,
-      rgba(57, 139, 255, 0.06),
+      rgba(57, 139, 255, 0.05),
       transparent 50%
     ),
     #050914;
@@ -34,6 +34,81 @@
   margin-top: 4rem;
 }
 
+/* INLINE VISUAL ELEMENT */
+
+.visualPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.inlineVisual {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+
+.node {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #398bff;
+  box-shadow: 0 0 10px rgba(57, 139, 255, 0.6);
+}
+
+.nodeA { top: 20%; left: 20%; }
+.nodeB { top: 15%; right: 20%; }
+.nodeC { top: 50%; right: 10%; }
+.nodeD { bottom: 20%; left: 25%; }
+.nodeE { bottom: 15%; left: 60%; }
+
+.connection {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(89, 199, 232, 0.35),
+    transparent
+  );
+}
+
+.connAB { top: 20%; left: 25%; width: 55%; transform: rotate(-8deg); }
+.connBC { top: 17%; right: 30%; width: 60%; transform: rotate(18deg); }
+.connCD { top: 45%; right: 15%; width: 45%; transform: rotate(75deg); }
+.connDE { bottom: 17%; left: 40%; width: 35%; transform: rotate(-15deg); }
+.connEA { top: 25%; left: 22%; width: 40%; transform: rotate(-60deg); }
+
+/* PANEL GRID */
+
+.panelGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+/* FOOTER */
+
+.labFooter {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  z-index: 3;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+
+  color: #526782;
+  font-size: 0.65rem;
+  letter-spacing: 0.13em;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 900px) {
@@ -41,10 +116,54 @@
     grid-template-columns: 1fr;
     gap: 3rem;
   }
+
+  .panelGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 600px) {
-  .spaceStation {
+  .technologyLab {
     padding-block: 6rem;
+  }
+
+  .container {
+    padding-inline: clamp(0.75rem, 5vw, 5rem);
+  }
+
+  .content {
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .visualPanel {
+    min-height: 240px;
+  }
+
+  .inlineVisual {
+    width: 220px;
+    height: 220px;
+  }
+
+  .labFooter {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 3rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .node {
+    animation: none;
+  }
+
+  .connection {
+    animation: none;
   }
 }

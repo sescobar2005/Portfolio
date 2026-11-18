@@ -5,7 +5,7 @@ import StationPanel from './station-panel';
 const panels = [
   {
     id: 'core-architecture',
-    number: 'MODULE 01',
+    number: 'LAB 01',
     title: 'Core Architecture',
     description:
       'Backend architecture and system design principles applied to build scalable, maintainable server-side systems.',
@@ -13,7 +13,7 @@ const panels = [
   },
   {
     id: 'data-platform',
-    number: 'MODULE 02',
+    number: 'LAB 02',
     title: 'Data Platform',
     description:
       'Database design and management with PostgreSQL and Prisma, focused on data integrity and query performance.',
@@ -21,7 +21,7 @@ const panels = [
   },
   {
     id: 'service-layer',
-    number: 'MODULE 03',
+    number: 'LAB 03',
     title: 'Service Layer',
     description:
       'API development and backend services with an emphasis on clean interfaces, reliability and operational simplicity.',
@@ -29,7 +29,7 @@ const panels = [
   },
   {
     id: 'engineering-foundation',
-    number: 'MODULE 04',
+    number: 'LAB 04',
     title: 'Engineering Foundation',
     description:
       'Software engineering fundamentals: code quality, testing practices and architectural decision-making.',

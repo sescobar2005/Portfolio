@@ -1,27 +1,20 @@
 import styles from './station-decoration.module.css';
 
-export default function StationDecoration() {
+export default function TechLabVisual() {
   return (
     <div className={styles.decoration} aria-hidden="true">
-      <div className={styles.orbitalRing} />
-      <div className={styles.stationCore} />
-      <div className={styles.dockingArm} />
-      <div className={styles.dockingArmAlt} />
-
-      <div className={`${styles.module} ${styles['moduleTop']}`} />
-      <div className={`${styles.module} ${styles['moduleRight']}`} />
-      <div className={`${styles.module} ${styles['moduleBottom']}`} />
-      <div className={`${styles.module} ${styles['moduleLeft']}`} />
-
-      <div className={`${styles.beacon} ${styles['beaconTop']}`} />
-      <div className={`${styles.beacon} ${styles['beaconRight']}`} />
-      <div className={`${styles.beacon} ${styles['beaconBottom']}`} />
-      <div className={`${styles.beacon} ${styles['beaconLeft']}`} />
-
-      <div className={`${styles.gridLine} ${styles['lineHorizontal']}`} />
-      <div className={`${styles.gridLine} ${styles['lineVertical']}`} />
-
-      <div className={styles.scanLine} />
+      <div className={`${styles.gridDot} ${styles['dot1']}`} />
+      <div className={`${styles.gridDot} ${styles['dot2']}`} />
+      <div className={`${styles.gridDot} ${styles['dot3']}`} />
+      <div className={`${styles.gridDot} ${styles['dot4']}`} />
+      <div className={`${styles.gridDot} ${styles['dot5']}`} />
+      <div className={`${styles.gridDot} ${styles['dot6']}`} />
+      <div className={`${styles.gridDot} ${styles['dot7']}`} />
+      <div className={`${styles.gridDot} ${styles['dot8']}`} />
+      <div className={`${styles.gridLine} ${styles['line1']}`} />
+      <div className={`${styles.gridLine} ${styles['line2']}`} />
+      <div className={`${styles.gridLine} ${styles['line3']}`} />
+      <div className={`${styles.gridLine} ${styles['line4']}`} />
     </div>
   );
 }
