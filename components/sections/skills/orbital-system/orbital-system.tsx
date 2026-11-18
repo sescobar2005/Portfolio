@@ -1,24 +1,19 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
-
 import styles from './orbital-system.module.css';
 
 import { ORBIT_RADII, TECHNICAL_INVENTORY, TECH_LOGOS } from './technical-data';
 
-export default function OrbitalSystem({ initialCategory }: { initialCategory?: string }) {
-  const [selectedId, setSelectedId] = useState<string>(
-    initialCategory || TECHNICAL_INVENTORY[0].identifier
-  );
+// Flatten all technologies from all categories into one list
+const ALL_TECHNOLOGIES = TECHNICAL_INVENTORY.flatMap((cat) =>
+  cat.technologies.map((tech) => ({
+    name: tech,
+    logoUrl: TECH_LOGOS[tech],
+    color: cat.color,
+  }))
+);
 
-  const selectedCategory = TECHNICAL_INVENTORY.find(
-    (c) => c.identifier === selectedId
-  )!;
-
-  const handleSelect = useCallback((id: string) => {
-    setSelectedId(id);
-  }, []);
-
+export default function OrbitalSystem() {
   return (
     <section className={styles.orbitalSystem}>
       {/* Central nucleus */}
@@ -28,109 +23,53 @@ export default function OrbitalSystem({ initialCategory }: { initialCategory?: s
         <span className={styles.nucleusLabel}>KNOWLEDGE CORE</span>
       </div>
 
-      {TECHNICAL_INVENTORY.map((category) => (
-        <OrbitOrbit
-          key={category.identifier}
-          category={category}
-          radius={ORBIT_RADII[TECHNICAL_INVENTORY.indexOf(category)]}
-          isSelected={category.identifier === selectedId}
-          onSelect={handleSelect}
+      {/* Single orbit system - all technologies */}
+      <div className={styles.orbitGroup}>
+        {/* Orbit path ring */}
+        <div
+          className={styles.orbitRing}
+          style={{ width: ORBIT_RADII[0] * 2, height: ORBIT_RADII[0] * 2 }}
         />
-      ))}
 
-      {/* Category selector */}
-      <div className={styles.orbitSelector}>
-        {TECHNICAL_INVENTORY.map((category) => (
-          <button
-            key={category.identifier}
-            className={`${styles.selectorBtn} ${
-              category.identifier === selectedId ? styles.selected : ''
-            }`}
-            onClick={() => setSelectedId(category.identifier)}
-            aria-label={`Select ${category.title}`}
-          >
-            <span className={styles.selectorNumber}>{category.number}</span>
-            <span className={styles.selectorCode}>{category.identifier}</span>
-            <span className={styles.selectorTitle}>{category.title}</span>
-          </button>
-        ))}
-      </div>
+        {/* Satellites - all technology logos orbiting together */}
+        {ALL_TECHNOLOGIES.map((tech, index) => {
+          const angleDeg = (index / ALL_TECHNOLOGIES.length) * 360;
+          const x = Math.round(
+            Math.cos((angleDeg * Math.PI) / 180) * ORBIT_RADII[0]
+          );
+          const y = Math.round(
+            Math.sin((angleDeg * Math.PI) / 180) * ORBIT_RADII[0]
+          );
 
-      {/* Selected category info panel */}
-      <div className={`${styles.categoryInfo} ${styles.visible}`}>
-        <div className={styles.infoHeader}>
-          <span className={styles.infoNumber}>{selectedCategory.number}</span>
-          <span className={styles.infoCode}>{selectedCategory.identifier}</span>
-        </div>
-        <h2 className={styles.infoTitle}>{selectedCategory.title}</h2>
-        <p className={styles.infoDescription}>{selectedCategory.description}</p>
-        <div className={styles.infoTechnologies}>
-          {selectedCategory.technologies.map((tech) => (
-            <span key={tech} className={styles.infoTech}>
-              {tech}
-            </span>
-          ))}
-        </div>
+          return (
+            <div
+              key={tech.name}
+              className={styles.satelliteContainer}
+              style={{
+                position: 'absolute',
+                left: `calc(50% + ${x}px)`,
+                top: `calc(50% + ${y}px)`,
+                width: 32,
+                height: 32,
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={`Select ${tech.name}`}
+            >
+              <div className={styles.satelliteDot} />
+              <img
+                className={styles.satelliteLogo}
+                src={tech.logoUrl}
+                alt={tech.name}
+                width={20}
+                height={20}
+                style={{ filter: 'drop-shadow(0 0 4px rgba(0, 0, 0, 0.3))' }}
+              />
+              <span className={styles.satelliteLabel}>{tech.name}</span>
+            </div>
+          );
+        })}
       </div>
     </section>
-  );
-}
-
-interface OrbitOrbitProps {
-  category: typeof TECHNICAL_INVENTORY[number];
-  radius: number;
-  isSelected: boolean;
-  onSelect: (id: string) => void;
-}
-
-function OrbitOrbit({ category, radius, isSelected, onSelect }: OrbitOrbitProps) {
-  const techCount = category.technologies.length;
-  const duration = 20 + techCount * 2;
-
-  return (
-    <div className={styles.orbitGroup}>
-      {/* Orbit path ring */}
-      <div
-        className={styles.orbitRing}
-        style={{ width: radius * 2, height: radius * 2 }}
-      />
-
-      {/* Satellites - technology logos orbiting */}
-      {category.technologies.map((tech, techIndex) => {
-        const angleDeg = (techIndex / techCount) * 360;
-        const x = Math.round(Math.cos((angleDeg * Math.PI) / 180) * radius);
-        const y = Math.round(Math.sin((angleDeg * Math.PI) / 180) * radius);
-        const logoUrl = TECH_LOGOS[tech];
-
-        return (
-          <div
-            key={tech}
-            className={styles.satelliteContainer}
-            style={{
-              position: 'absolute',
-              left: `calc(50% + ${x}px)`,
-              top: `calc(50% + ${y}px)`,
-              width: 32,
-              height: 32,
-            }}
-            onClick={() => onSelect(category.identifier)}
-            role="button"
-            tabIndex={0}
-            aria-label={`Select ${tech} from ${category.title}`}
-          >
-            <div className={styles.satelliteDot} />
-            <img
-              className={styles.satelliteLogo}
-              src={logoUrl}
-              alt={tech}
-              width={20}
-              height={20}
-              style={{ filter: 'drop-shadow(0 0 4px rgba(0, 0, 0, 0.3))' }}
-            />
-            <span className={styles.satelliteLabel}>{tech}</span>
-          </div>
-        );
-      })}
-    </div>
   );
 }
