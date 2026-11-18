@@ -14,7 +14,7 @@
 
 .title {
   color: #e8eef8;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.1;
@@ -28,15 +28,17 @@
 }
 
 .orbitWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 600px;
+  margin: 0 auto;
 }
 
 .categorySelector {
   display: flex;
   gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .categoryButton {
@@ -65,53 +67,54 @@
 
 .categoryButtonActive {
   background: rgba(57, 139, 255, 0.08);
-  border-color: rgba(57, 139, 255, 0.4);
+  border-color: rgba(57, 139, 255, 0.6);
   color: #e8eef8;
 }
 
-.orbitVisualization {
+.orbitGroup {
   position: relative;
-  width: 260px;
-  height: 260px;
+  width: 100%;
+  height: 100%;
 }
 
 .orbitRing {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
-  height: 100%;
-  border: 1px solid rgba(57, 139, 255, 0.15);
+  width: 280px;
+  height: 280px;
+  border: 1px solid rgba(214, 174, 104, 0.3);
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
 
-.orbitGroup {
+.orbitSatellite {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100%;
-  height: 100%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%) rotate(var(--angle));
+}
+
+.satelliteContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  height: auto;
+  transform: rotate(calc(-1 * var(--angle)));
 }
 
 .orbitDot {
-  position: absolute;
-  top: 50%;
-  left: 50%;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--color);
   box-shadow: 0 0 10px var(--color);
-  transform: translate(-50%, -50%);
 }
 
-.orbitLabel {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -120%);
-  color: #e8eef8;
+.techLabel {
   font-size: 0.7rem;
   font-weight: 500;
   white-space: nowrap;
@@ -143,5 +146,19 @@
   .orbitLabel {
     font-size: 0.6rem;
     top: -105%;
+  }
+
+  .categoryButton {
+    padding: 0.55rem 0.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbitGroup {
+    animation: none;
+  }
+
+  .categoryButton {
+    transition: none;
   }
 }

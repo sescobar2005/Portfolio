@@ -61,25 +61,27 @@ export default function TechnologyOrbit() {
 
         <div className={styles.orbitVisualization}>
           <div className={styles.orbitRing} />
-          <div className={styles.orbitParticles}>
+          <div className={styles.orbitGroup}>
             {activeCategory.technologies.map((tech, index) => {
               const angleDeg = (index / activeCategory.technologies.length) * 360;
               const angleRad = (angleDeg * Math.PI) / 180;
-              const radius = 140;
-              const x = Math.round(Math.cos(angleRad) * radius);
-              const y = Math.round(Math.sin(angleRad) * radius * 0.5);
+              const x = Math.round(Math.cos(angleRad) * 140);
+              const y = Math.round(Math.sin(angleRad) * 140 * 0.5);
 
               return (
-                <div
+              <div
                   key={tech}
-                  className={styles.technologyNode}
+                  className={styles.satelliteContainer}
                   style={{
+                    '--angle': `${angleDeg}deg`,
                     left: `calc(50% + ${x}px)`,
                     top: `calc(50% + ${y}px)`,
-                  }}
+                  } as React.CSSProperties}
                 >
-                  <div className={styles.orbitDot} />
-                  <span className={styles.techLabel}>{tech}</span>
+                  <div className={styles.satelliteContent}>
+                    <div className={styles.orbitDot} />
+                    <span className={styles.techLabel}>{tech}</span>
+                  </div>
                 </div>
               );
             })}
