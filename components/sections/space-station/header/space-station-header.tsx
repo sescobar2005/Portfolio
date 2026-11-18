@@ -5,17 +5,24 @@ export default function SpaceStationHeader() {
     <header className={styles.header}>
       <p className={styles.eyebrow}>
         <span className={styles.statusDot} />
-        ORBITAL FACILITY / 001
+        03 / ORBITAL FACILITY
       </p>
 
-      <h1 className={styles.stationTitle}>
-        SPACE STATION
-      </h1>
+      <h2 className={styles.title}>
+        Space Station
+        <span>Orbital architecture.</span>
+      </h2>
 
       <p className={styles.subtitle}>
         Systems designed for scale, reliability and maintainability. The
         architecture behind the software.
       </p>
+
+      <div className={styles.metadata}>
+        <span>SYSTEM: ORBITAL-03</span>
+        <span>STATUS: OPERATIONAL</span>
+        <span>SECTOR: BACKEND / ARCHITECTURE</span>
+      </div>
     </header>
   );
 }
