@@ -1,19 +1,16 @@
 import styles from './skills.module.css';
 
 import SkillsHeader from './header/skills-header';
-import OrbitalSystem from './orbital-system/orbital-system';
-import LabDecoration from './decoration/lab-decoration';
+import TechnologyGalaxy from './technology-galaxy/technology-galaxy';
 
 export default function Skills() {
   return (
     <section id="skills" className={styles.skills}>
-      <LabDecoration />
-
       <div className={styles.container}>
         <SkillsHeader />
 
         <div className={styles.content}>
-          <OrbitalSystem />
+          <TechnologyGalaxy />
         </div>
 
         <footer className={styles.footer}>
