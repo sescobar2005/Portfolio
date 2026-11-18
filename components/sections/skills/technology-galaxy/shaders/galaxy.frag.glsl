@@ -4,17 +4,23 @@ varying vec3 vPosition;
 varying float vDepth;
 
 void main() {
-  // Spiral spiral pattern
-  float angle = atan(position.x, position.z);
-  float radius = sqrt(position.x * position.x + position.z * position.z);
+  // Coordenadas espirales
+  float angle = atan(vPosition.x, vPosition.z);
+  float radius = sqrt(vPosition.x * vPosition.x + vPosition.z * vPosition.z);
+
+  // Patrón espiral con múltiples brazos
+  float spiral = sin(angle * 3.0 - radius * 0.1 - uTime * 0.3) * 0.3 + 0.7;
   
-  // Spiral arm modulation
-  float spiral = sin(angle * 3.0 - radius * 0.1 - uTime * 0.3) * 0.3;
-  float yOffset = spiral * 2.0;
+  // Gradiente de color basado en la distancia radial
+  float dist = radius / 150.0;
+  vec3 color = mix(vec3(0.2, 0.3, 0.6), vec3(0.4, 0.2, 0.8), dist);
   
-  vec3 newPos = vec3(position.x, position.y + yOffset, position.z);
+  // Añadir brillo en el centro
+  float glow = exp(-radius * 0.02);
+  color += vec3(0.2, 0.3, 0.5) * glow * 0.3;
   
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
-  vPosition = newPos;
-  vDepth = -newPos.z;
+  // Alpha basado en distancia y brillo
+  float alpha = density * 0.2 * glow;
+  
+  gl_FragColor = vec4(color, alpha);
 }

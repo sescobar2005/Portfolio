@@ -27,7 +27,7 @@ export default function GalaxyNebula() {
     positions[i + 1] = (Math.random() - 0.5) * 100;
     positions[i + 2] = (Math.random() - 0.5) * 200;
 
-    sizes[i] = Math.random() * 2 + 1;
+    sizes[i] = Math.random() * 3 + 1;
   }
 
   const geometry = new THREE.BufferGeometry();

@@ -20,7 +20,6 @@ export default function TechnologySatellites() {
       name: tech,
       logoUrl: TECH_LOGOS[tech],
       color: cat.color,
-      category: cat.identifier,
     }))
   );
 
@@ -35,7 +34,7 @@ export default function TechnologySatellites() {
 
         return (
           <mesh
-            key={`${tech.category}-${tech.name}`}
+            key={tech.name}
             position={[x, y, z]}
           >
             <planeGeometry args={[10, 10]} />

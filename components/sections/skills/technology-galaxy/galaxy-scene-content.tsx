@@ -12,7 +12,7 @@ import TechnologySatellites from './technology-satellites';
 
 export default function GalaxySceneContent() {
   useFrame((state, delta) => {
-    state.camera.position.set(0, 50, 200);
+    state.camera.position.set(0, 50, 250);
     state.camera.lookAt(0, 0, 0);
   });
 

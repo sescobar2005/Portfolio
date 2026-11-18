@@ -1,18 +1,30 @@
 'use client';
 
 import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import { useRef } from 'react';
 
 export default function GalaxyCore() {
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  useFrame((state, delta) => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += delta * 0.01;
+      meshRef.current.rotation.x += delta * 0.005;
+    }
+  });
+
   return (
     <group>
-      {/* Core glow */}
-      <mesh>
+      {/* Núcleo brillante central */}
+      <mesh ref={meshRef}>
         <sphereGeometry args={[12, 64, 64]} />
         <meshBasicMaterial
           color="#ffffff"
           toneMapped={false}
         />
       </mesh>
+      {/* Capa intermedia */}
       <mesh>
         <sphereGeometry args={[10, 64, 64]} />
         <meshBasicMaterial
@@ -22,6 +34,7 @@ export default function GalaxyCore() {
           toneMapped={false}
         />
       </mesh>
+      {/* Núcleo interno brillante */}
       <mesh>
         <sphereGeometry args={[6, 64, 64]} />
         <meshBasicMaterial
@@ -31,6 +44,7 @@ export default function GalaxyCore() {
           toneMapped={false}
         />
       </mesh>
+      {/* Núcleo más brillante */}
       <mesh>
         <sphereGeometry args={[3, 64, 64]} />
         <meshBasicMaterial
