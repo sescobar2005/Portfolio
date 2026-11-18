@@ -8,10 +8,9 @@ export default function SkillsHeader() {
         02 / TECHNOLOGY LAB
       </p>
 
-      <h2 className={styles.title}>
-        The tools
-        <span> behind the systems.</span>
-      </h2>
+      <h1 className={styles.title}>
+        The tools behind the systems.
+      </h1>
 
       <p className={styles.subtitle}>
         Technologies, tools and concepts I use to design,

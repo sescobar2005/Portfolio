@@ -3,21 +3,16 @@ import styles from './lab-decoration.module.css';
 export default function LabDecoration() {
   return (
     <div className={styles.decoration} aria-hidden="true">
-      <div className={styles.outerRing} />
-      <div className={styles.middleRing} />
-      <div className={styles.innerRing} />
-
-      <div className={styles.core}>
-        <div className={styles.coreGlow} />
-        <div className={styles.coreCenter} />
-      </div>
-
-      <span className={`${styles.signal} ${styles.signalTop}`} />
-      <span className={`${styles.signal} ${styles.signalRight}`} />
-      <span className={`${styles.signal} ${styles.signalBottom}`} />
-      <span className={`${styles.signal} ${styles.signalLeft}`} />
-
-      <div className={styles.scanLine} />
+      <div className={`${styles.gridDot} ${styles['dot1']}`} />
+      <div className={`${styles.gridDot} ${styles['dot2']}`} />
+      <div className={`${styles.gridDot} ${styles['dot3']}`} />
+      <div className={`${styles.gridDot} ${styles['dot4']}`} />
+      <div className={`${styles.gridDot} ${styles['dot5']}`} />
+      <div className={`${styles.gridDot} ${styles['dot6']}`} />
+      <div className={`${styles.gridLine} ${styles['line1']}`} />
+      <div className={`${styles.gridLine} ${styles['line2']}`} />
+      <div className={`${styles.gridLine} ${styles['line3']}`} />
+      <div className={`${styles.gridLine} ${styles['line4']}`} />
     </div>
   );
 }

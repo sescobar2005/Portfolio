@@ -1,24 +1,23 @@
 .skills {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 
   min-height: 100vh;
-  padding: 8rem 8%;
-
-  overflow: hidden;
+  padding: 8rem clamp(1.5rem, 8vw, 8rem);
 
   background:
     radial-gradient(
-      ellipse at 90% 40%,
-      rgba(30, 64, 175, 0.1),
+      ellipse at 85% 25%,
+      rgba(57, 139, 255, 0.06),
       transparent 45%
     ),
-    linear-gradient(
-      180deg,
-      #080f20 0%,
-      #0b1426 50%,
-      #080f20 100%
-    );
+    radial-gradient(
+      ellipse at 15% 80%,
+      rgba(89, 199, 232, 0.04),
+      transparent 45%
+    ),
+    #050914;
 }
 
 .container {
@@ -38,12 +37,12 @@
   justify-content: space-between;
   gap: 1rem;
 
-  margin-top: 3rem;
-  padding-top: 1.25rem;
+  margin-top: 4rem;
+  padding-top: 1.5rem;
 
-  border-top: 1px solid rgba(148, 163, 184, 0.12);
+  border-top: 1px solid rgba(125, 166, 210, 0.16);
 
-  color: #64748b;
+  color: #526782;
   font-size: 0.65rem;
   letter-spacing: 0.13em;
 }

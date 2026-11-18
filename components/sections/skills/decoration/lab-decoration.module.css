@@ -1,185 +1,137 @@
 .decoration {
   position: absolute;
-  top: 50%;
-  right: -180px;
-
-  width: 520px;
-  aspect-ratio: 1;
-
-  transform: translateY(-50%);
-
-  pointer-events: none;
-  opacity: 0.45;
-}
-
-/* HOLOGRAPHIC RINGS */
-
-.outerRing,
-.middleRing,
-.innerRing {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-
-  border: 1px solid rgba(96, 165, 250, 0.2);
-  border-radius: 50%;
-
-  transform: translate(-50%, -50%);
-}
-
-.outerRing {
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+
+  pointer-events: none;
+  opacity: 0.25;
 }
 
-.middleRing {
-  width: 75%;
-  height: 75%;
+/* GRID DOTS */
 
-  border-color: rgba(139, 92, 246, 0.25);
-}
-
-.innerRing {
-  width: 48%;
-  height: 48%;
-
-  border-style: dashed;
-  border-color: rgba(34, 211, 238, 0.3);
-
-  animation: rotate-ring 35s linear infinite;
-}
-
-/* CORE */
-
-.core {
+.gridDot {
   position: absolute;
-  top: 50%;
-  left: 50%;
-
-  width: 130px;
-  aspect-ratio: 1;
-
-  transform: translate(-50%, -50%);
-}
-
-.coreGlow {
-  position: absolute;
-  inset: -35%;
-
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
-
-  background: radial-gradient(
-    circle,
-    rgba(59, 130, 246, 0.22),
-    rgba(139, 92, 246, 0.08) 45%,
-    transparent 75%
-  );
-
-  filter: blur(20px);
+  background: #398bff;
+  box-shadow: 0 0 8px rgba(57, 139, 255, 0.4);
 }
 
-.coreCenter {
+.dot1 { top: 10%; left: 10%; animation: pulse-dot 4s ease-in-out infinite 0s; }
+.dot2 { top: 15%; right: 12%; animation: pulse-dot 4s ease-in-out infinite 1s; }
+.dot3 { top: 30%; left: 20%; animation: pulse-dot 4s ease-in-out infinite 2s; }
+.dot4 { top: 40%; right: 25%; animation: pulse-dot 4s ease-in-out infinite 0.5s; }
+.dot5 { top: 60%; left: 15%; animation: pulse-dot 4s ease-in-out infinite 1.5s; }
+.dot6 { top: 70%; right: 20%; animation: pulse-dot 4s ease-in-out infinite 2.5s; }
+
+/* GRID LINES */
+
+.gridLine {
   position: absolute;
-  inset: 0;
-
-  border: 1px solid rgba(96, 165, 250, 0.4);
-  border-radius: 50%;
-
-  background: radial-gradient(
-    circle at 35% 30%,
-    rgba(96, 165, 250, 0.3),
-    rgba(15, 23, 42, 0.7) 65%
-  );
-
-  box-shadow:
-    0 0 25px rgba(59, 130, 246, 0.15),
-    inset 0 0 20px rgba(96, 165, 250, 0.12);
-}
-
-/* SIGNAL POINTS */
-
-.signal {
-  position: absolute;
-
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background: #67e8f9;
-  box-shadow:
-    0 0 10px #22d3ee,
-    0 0 20px rgba(34, 211, 238, 0.6);
-}
-
-.signalTop {
-  top: 12%;
-  left: 50%;
-}
-
-.signalRight {
-  top: 50%;
-  right: 12%;
-}
-
-.signalBottom {
-  bottom: 12%;
-  left: 50%;
-}
-
-.signalLeft {
-  top: 50%;
-  left: 12%;
-}
-
-/* SCAN LINE */
-
-.scanLine {
-  position: absolute;
-  top: 50%;
-  left: 0;
-
-  width: 100%;
-  height: 1px;
-
   background: linear-gradient(
     to right,
     transparent,
-    rgba(34, 211, 238, 0.5),
+    rgba(89, 199, 232, 0.15),
     transparent
   );
+}
 
-  opacity: 0.5;
+.line1 {
+  top: 25%;
+  left: 5%;
+  width: 30%;
+  height: 1px;
+  transform: rotate(12deg);
+  animation: pulse-line 5s ease-in-out infinite 0s;
+}
+
+.line2 {
+  top: 45%;
+  right: 8%;
+  width: 25%;
+  height: 1px;
+  transform: rotate(-8deg);
+  animation: pulse-line 5s ease-in-out infinite 1.5s;
+}
+
+.line3 {
+  bottom: 30%;
+  left: 8%;
+  width: 35%;
+  height: 1px;
+  transform: rotate(5deg);
+  animation: pulse-line 5s ease-in-out infinite 3s;
+}
+
+.line4 {
+  bottom: 45%;
+  right: 10%;
+  width: 20%;
+  height: 1px;
+  transform: rotate(-15deg);
+  animation: pulse-line 5s ease-in-out infinite 2s;
 }
 
 /* ANIMATIONS */
 
-@keyframes rotate-ring {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
   }
 
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
+  50% {
+    opacity: 0.9;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes pulse-line {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 0.6;
   }
 }
 
 /* RESPONSIVE */
 
+@media (max-width: 900px) {
+  .decoration {
+    opacity: 0.2;
+  }
+
+  .gridDot {
+    width: 3px;
+    height: 3px;
+  }
+}
+
 @media (max-width: 600px) {
   .decoration {
-    top: 10%;
-    right: -300px;
+    opacity: 0.15;
+  }
 
-    width: 400px;
-
-    transform: none;
-    opacity: 0.3;
+  .gridLine {
+    display: none;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .innerRing {
+  .gridDot {
     animation: none;
+    opacity: 0.4;
+  }
+
+  .gridLine {
+    animation: none;
+    opacity: 0.2;
   }
 }
