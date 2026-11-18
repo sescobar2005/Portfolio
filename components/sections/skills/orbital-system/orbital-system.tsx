@@ -2,14 +2,13 @@
 
 import styles from './orbital-system.module.css';
 
-import { ORBIT_RADII, TECHNICAL_INVENTORY, TECH_LOGOS } from './technical-data';
+import { TECHNICAL_INVENTORY, TECH_LOGOS } from './technical-data';
 
-// Flatten all technologies from all categories into one list
+// Flatten all technologies from all categories into one galaxy list
 const ALL_TECHNOLOGIES = TECHNICAL_INVENTORY.flatMap((cat) =>
   cat.technologies.map((tech) => ({
     name: tech,
     logoUrl: TECH_LOGOS[tech],
-    color: cat.color,
   }))
 );
 
@@ -23,22 +22,19 @@ export default function OrbitalSystem() {
         <span className={styles.nucleusLabel}>KNOWLEDGE CORE</span>
       </div>
 
-      {/* Single orbit system - all technologies */}
+      {/* Single animated galaxy orbit */}
       <div className={styles.orbitGroup}>
         {/* Orbit path ring */}
-        <div
-          className={styles.orbitRing}
-          style={{ width: ORBIT_RADII[0] * 2, height: ORBIT_RADII[0] * 2 }}
-        />
+        <div className={styles.orbitRing} />
 
         {/* Satellites - all technology logos orbiting together */}
         {ALL_TECHNOLOGIES.map((tech, index) => {
           const angleDeg = (index / ALL_TECHNOLOGIES.length) * 360;
           const x = Math.round(
-            Math.cos((angleDeg * Math.PI) / 180) * ORBIT_RADII[0]
+            Math.cos((angleDeg * Math.PI) / 180) * 150
           );
           const y = Math.round(
-            Math.sin((angleDeg * Math.PI) / 180) * ORBIT_RADII[0]
+            Math.sin((angleDeg * Math.PI) / 180) * 150
           );
 
           return (
@@ -54,18 +50,23 @@ export default function OrbitalSystem() {
               }}
               role="button"
               tabIndex={0}
-              aria-label={`Select ${tech.name}`}
+              aria-label={tech.name}
             >
-              <div className={styles.satelliteDot} />
-              <img
-                className={styles.satelliteLogo}
-                src={tech.logoUrl}
-                alt={tech.name}
-                width={20}
-                height={20}
-                style={{ filter: 'drop-shadow(0 0 4px rgba(0, 0, 0, 0.3))' }}
-              />
-              <span className={styles.satelliteLabel}>{tech.name}</span>
+              <div
+                className={styles.satelliteContent}
+                style={{ transform: `rotate(${-angleDeg}deg)` }}
+              >
+                <div className={styles.satelliteDot} />
+                <img
+                  className={styles.satelliteLogo}
+                  src={tech.logoUrl}
+                  alt={tech.name}
+                  width={20}
+                  height={20}
+                  style={{ filter: 'drop-shadow(0 0 6px rgba(0, 0, 0, 0.3))' }}
+                />
+                <span className={styles.satelliteLabel}>{tech.name}</span>
+              </div>
             </div>
           );
         })}
