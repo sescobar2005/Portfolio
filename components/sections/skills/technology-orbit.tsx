@@ -66,14 +66,16 @@ export default function TechnologyOrbit() {
               const angleDeg = (index / activeCategory.technologies.length) * 360;
               const angleRad = (angleDeg * Math.PI) / 180;
               const radius = 140;
+              const x = Math.round(Math.cos(angleRad) * radius);
+              const y = Math.round(Math.sin(angleRad) * radius * 0.5);
 
               return (
                 <div
                   key={tech}
                   className={styles.technologyNode}
                   style={{
-                    left: `calc(50% + ${Math.cos(angleRad) * radius}px)`,
-                    top: `calc(50% + ${Math.sin(angleRad) * radius * 0.5}px)`,
+                    left: `calc(50% + ${x}px)`,
+                    top: `calc(50% + ${y}px)`,
                   }}
                 >
                   <div className={styles.orbitDot} />
