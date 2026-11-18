@@ -1,3 +1,21 @@
+'use client';
+
+import {
+  JavaLogo,
+  NodeJsLogo,
+  NestJsLogo,
+  JavaScriptLogo,
+  TypeScriptLogo,
+  ReactLogo,
+  NextJsLogo,
+  PostgreSQLLogo,
+  PrismaLogo,
+  GitLogo,
+  GitHubLogo,
+  VitestLogo,
+  NpmLogo,
+} from './logo-icons';
+
 export interface TechnologyCategory {
   number: string;
   identifier: string;
@@ -5,6 +23,11 @@ export interface TechnologyCategory {
   description: string;
   technologies: string[];
   color: string;
+}
+
+export interface TechLogoEntry {
+  name: string;
+  logo: React.ComponentType<{ className?: string }>;
 }
 
 export const TECHNICAL_INVENTORY: TechnologyCategory[] = [
@@ -43,3 +66,19 @@ export const TECHNICAL_INVENTORY: TechnologyCategory[] = [
 ];
 
 export const ORBIT_RADII = [110, 160, 210, 260];
+
+export const TECH_LOGOS: Record<string, React.ComponentType<{ className?: string }>> = {
+  Java: JavaLogo,
+  'Node.js': NodeJsLogo,
+  NestJS: NestJsLogo,
+  JavaScript: JavaScriptLogo,
+  TypeScript: TypeScriptLogo,
+  React: ReactLogo,
+  'Next.js': NextJsLogo,
+  PostgreSQL: PostgreSQLLogo,
+  'Prisma ORM': PrismaLogo,
+  Git: GitLogo,
+  GitHub: GitHubLogo,
+  Vitest: VitestLogo,
+  npm: NpmLogo,
+};

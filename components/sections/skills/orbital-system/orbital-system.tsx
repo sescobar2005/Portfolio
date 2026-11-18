@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 
 import styles from './orbital-system.module.css';
 
-import { ORBIT_RADII, TECHNICAL_INVENTORY } from './technical-data';
+import { ORBIT_RADII, TECHNICAL_INVENTORY, TECH_LOGOS } from './technical-data';
 
 export default function OrbitalSystem({ initialCategory }: { initialCategory?: string }) {
   const [selectedId, setSelectedId] = useState<string>(
@@ -94,11 +94,12 @@ function OrbitOrbit({ category, radius, isSelected, onSelect }: OrbitOrbitProps)
         style={{ width: radius * 2, height: radius * 2 }}
       />
 
-      {/* Satellites */}
+      {/* Satellites - technology logos orbiting */}
       {category.technologies.map((tech, techIndex) => {
-        const angle = (techIndex / techCount) * Math.PI * 2;
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
+        const angleDeg = (techIndex / techCount) * 360;
+        const x = Math.cos((angleDeg * Math.PI) / 180) * radius;
+        const y = Math.sin((angleDeg * Math.PI) / 180) * radius;
+        const LogoComponent = TECH_LOGOS[tech];
 
         return (
           <div
@@ -108,15 +109,16 @@ function OrbitOrbit({ category, radius, isSelected, onSelect }: OrbitOrbitProps)
               position: 'absolute',
               left: `calc(50% + ${x}px)`,
               top: `calc(50% + ${y}px)`,
-              width: 16,
-              height: 16,
+              width: 32,
+              height: 32,
             }}
             onClick={() => onSelect(category.identifier)}
             role="button"
             tabIndex={0}
             aria-label={`Select ${tech} from ${category.title}`}
           >
-            <div className={styles.satelliteDot} style={{ backgroundColor: category.color }} />
+            <div className={styles.satelliteDot} />
+            <LogoComponent className={styles.satelliteLogo} />
             <span className={styles.satelliteLabel}>{tech}</span>
           </div>
         );

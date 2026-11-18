@@ -70,6 +70,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  width: var(--radius);
+  height: var(--radius);
   border: 1px solid;
   border-radius: 50%;
   transform: translate(-50%, -50%);
@@ -80,9 +82,9 @@
 
 .satelliteContainer {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  animation: pulseSatellite 3s ease-in-out infinite;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
 }
 
 .satelliteContainer:hover .satelliteDot {
@@ -94,20 +96,25 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--color);
   box-shadow: 0 0 8px var(--color);
   transform: translate(-50%, -50%);
-  will-change: transform;
+  animation: pulseSatellite 3s ease-in-out infinite;
+}
+
+.satelliteLogo {
+  width: 20px;
+  height: 20px;
 }
 
 .satelliteLabel {
   position: absolute;
-  top: 50%;
-  left: calc(100% + 8px);
-  transform: translateY(-50%);
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
   color: #e8eef8;
   font-size: 0.7rem;
   font-weight: 500;
@@ -229,18 +236,6 @@
 
 /* ANIMATIONS */
 
-@keyframes pulseRing {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-}
-
 @keyframes pulseSatellite {
   0%,
   100% {
@@ -307,7 +302,6 @@
   }
 
   .satelliteContainer {
-    animation: none;
     opacity: 0.8;
   }
 }
