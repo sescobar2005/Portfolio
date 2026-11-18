@@ -15,13 +15,6 @@ export default function TechnicalOrbitCard() {
         REST APIs and relational databases.
       </p>
 
-      <div className={styles.technologies}>
-        <span>NestJS</span>
-        <span>PostgreSQL</span>
-        <span>Prisma</span>
-        <span>TypeScript</span>
-      </div>
-
       <span className={styles.cardFooter}>
         CURRENT TECHNICAL INTERESTS
       </span>
