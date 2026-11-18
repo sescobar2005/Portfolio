@@ -1,0 +1,26 @@
+.technologyGalaxy {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.canvasContainer {
+  width: 100%;
+  height: 100%;
+  background-color: #050914;
+}
+
+@media (max-width: 900px) {
+  .technologyGalaxy {
+    height: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .technologyGalaxy {
+    height: 420px;
+  }
+}
