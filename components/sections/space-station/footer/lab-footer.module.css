@@ -1,0 +1,32 @@
+.footer {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  z-index: 3;
+
+  transform: translateX(-50%);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+
+  color: #526782;
+  font-size: 0.65rem;
+  letter-spacing: 0.13em;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 600px) {
+  .footer {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: 3rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+}

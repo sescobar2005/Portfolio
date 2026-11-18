@@ -1,83 +1,69 @@
-.stationPanel {
+.informationCard {
   position: relative;
 
   display: flex;
   flex-direction: column;
 
-  padding: 1.75rem;
+  padding: 2rem;
 
   overflow: hidden;
 
   border: 1px solid rgba(125, 166, 210, 0.16);
   border-radius: 8px;
 
-  background:
-    linear-gradient(
-      145deg,
-      rgba(16, 29, 48, 0.45),
-      rgba(10, 20, 35, 0.35)
-    );
-
-  backdrop-filter: blur(10px);
+  background: rgba(10, 20, 35, 0.4);
 
   transition:
     border-color 250ms ease,
-    background 250ms ease,
     transform 250ms ease;
 }
 
-.stationPanel:hover {
-  transform: translateY(-3px);
+.informationCard:hover {
+  transform: translateY(-2px);
 
-  border-color: rgba(57, 139, 255, 0.35);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(16, 29, 48, 0.6),
-      rgba(10, 20, 35, 0.45)
-    );
+  border-color: rgba(57, 139, 255, 0.3);
 }
 
-/* PANEL HEADER */
+/* CARD HEADER */
 
-.panelHeader {
+.cardHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.moduleNumber {
+.cardNumber {
   color: #398bff;
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.1em;
 }
 
-.moduleCode {
+.cardLabel {
   color: #526782;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-/* PANEL TITLE */
+/* CARD TITLE */
 
-.panelTitle {
-  margin-bottom: 0.75rem;
+.cardTitle {
+  margin-bottom: 0.5rem;
 
   color: #e8eef8;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
 
-/* PANEL DESCRIPTION */
+/* CARD DESCRIPTION */
 
-.panelDescription {
-  max-width: 420px;
+.cardDescription {
+  max-width: 440px;
   margin-bottom: 1.5rem;
 
   color: #8999b2;
@@ -90,23 +76,23 @@
 .technologies {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .technology {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 
-  padding: 0.4rem 0.65rem;
+  padding: 0.3rem 0.55rem;
 
   border: 1px solid rgba(57, 139, 255, 0.18);
-  border-radius: 4px;
+  border-radius: 3px;
 
   background: rgba(57, 139, 255, 0.06);
 
   color: #93c5fd;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 500;
 
   transition:
@@ -119,24 +105,29 @@
   background: rgba(57, 139, 255, 0.12);
 }
 
+/* HIGHLIGHT */
+
+.highlight {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(125, 166, 210, 0.16);
+}
+
+.highlightValue {
+  color: #e8eef8;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
 /* RESPONSIVE */
 
 @media (max-width: 600px) {
-  .stationPanel {
-    padding: 1.35rem;
+  .informationCard {
+    padding: 1.5rem;
   }
 
-  .panelHeader {
+  .cardHeader {
     margin-bottom: 1.25rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stationPanel {
-    transition: none;
-  }
-
-  .technology {
-    transition: none;
   }
 }

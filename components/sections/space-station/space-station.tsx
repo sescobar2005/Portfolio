@@ -1,23 +1,23 @@
 import styles from './space-station.module.css';
 
-import SpaceStationHeader from './header/space-station-header';
-import StationDecoration from './decoration/station-decoration';
-import PanelGrid from './panels/panel-grid';
-import StationFooter from './footer/station-footer';
+import TechnologyLabHeader from './header/space-station-header';
+import PersonalIntroduction from './personal-introduction/personal-introduction';
+import InformationGrid from './information-grid/information-grid';
+import LabFooter from './footer/lab-footer';
 
-export default function SpaceStation() {
+export default function TechnologyLab() {
   return (
-    <section id="space-station" className={styles.spaceStation}>
-      <StationDecoration />
-
+    <section id="technology-lab" className={styles.technologyLab}>
       <div className={styles.container}>
-        <SpaceStationHeader />
+        <TechnologyLabHeader />
 
         <div className={styles.content}>
-          <PanelGrid />
+          <PersonalIntroduction />
+
+          <InformationGrid />
         </div>
 
-        <StationFooter />
+        <LabFooter />
       </div>
     </section>
   );
