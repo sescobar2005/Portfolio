@@ -46,8 +46,8 @@ function OrbitOrbit({ category, radius }: OrbitOrbitProps) {
       {/* Satellites - technology logos orbiting */}
       {category.technologies.map((tech, techIndex) => {
         const angleDeg = (techIndex / techCount) * 360;
-        const x = Math.cos((angleDeg * Math.PI) / 180) * radius;
-        const y = Math.sin((angleDeg * Math.PI) / 180) * radius;
+        const x = Math.round(Math.cos((angleDeg * Math.PI) / 180) * radius);
+        const y = Math.round(Math.sin((angleDeg * Math.PI) / 180) * radius);
         const LogoComponent = TECH_LOGOS[tech];
 
         return (
