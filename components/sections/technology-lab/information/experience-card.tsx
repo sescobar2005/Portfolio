@@ -1,4 +1,4 @@
-import styles from './information-grid.module.css';
+import styles from './information-card.module.css';
 
 export default function ExperienceCard() {
   return (
