@@ -1,11 +1,11 @@
 import styles from './station-footer.module.css';
 
-export default function LabFooter() {
+export default function StationFooter() {
   return (
     <footer className={styles.footer}>
-      <span>SYSTEM: LAB-01</span>
-      <span>SECTOR: ENGINEERING</span>
-      <span>STATUS: ACTIVE</span>
+      <span>SYSTEM: ORBITAL-03</span>
+      <span>SECTOR: BACKEND / ARCHITECTURE</span>
+      <span>STATUS: ONLINE</span>
     </footer>
   );
 }

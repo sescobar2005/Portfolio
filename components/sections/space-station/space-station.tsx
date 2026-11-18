@@ -1,40 +1,23 @@
 import styles from './space-station.module.css';
 
-import TechnologyLabHeader from './header/space-station-header';
-import TechLabVisual from './decoration/station-decoration';
+import SpaceStationHeader from './header/space-station-header';
+import StationDecoration from './decoration/station-decoration';
 import PanelGrid from './panels/panel-grid';
-import LabFooter from './footer/station-footer';
+import StationFooter from './footer/station-footer';
 
-export default function TechnologyLab() {
+export default function SpaceStation() {
   return (
-    <section id="technology-lab" className={styles.technologyLab}>
-      <TechLabVisual />
+    <section id="space-station" className={styles.spaceStation}>
+      <StationDecoration />
 
       <div className={styles.container}>
-        <TechnologyLabHeader />
+        <SpaceStationHeader />
 
         <div className={styles.content}>
-          <div className={styles.visualPanel}>
-            <div className={styles.inlineVisual}>
-              <div className={`${styles.node} ${styles.nodeA}`} />
-              <div className={`${styles.node} ${styles.nodeB}`} />
-              <div className={`${styles.node} ${styles.nodeC}`} />
-              <div className={`${styles.node} ${styles.nodeD}`} />
-              <div className={`${styles.node} ${styles.nodeE}`} />
-              <div className={`${styles.connection} ${styles.connAB}`} />
-              <div className={`${styles.connection} ${styles.connBC}`} />
-              <div className={`${styles.connection} ${styles.connCD}`} />
-              <div className={`${styles.connection} ${styles.connDE}`} />
-              <div className={`${styles.connection} ${styles.connEA}`} />
-            </div>
-          </div>
-
-          <div className={styles.panelGrid}>
-            <PanelGrid />
-          </div>
+          <PanelGrid />
         </div>
 
-        <LabFooter />
+        <StationFooter />
       </div>
     </section>
   );
