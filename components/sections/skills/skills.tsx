@@ -1,7 +1,7 @@
 import styles from './skills.module.css';
 
 import SkillsHeader from './header/skills-header';
-import TechnologyGrid from './technology-grid/technology-grid';
+import OrbitalSystem from './orbital-system/orbital-system';
 import LabDecoration from './decoration/lab-decoration';
 
 export default function Skills() {
@@ -11,7 +11,10 @@ export default function Skills() {
 
       <div className={styles.container}>
         <SkillsHeader />
-        <TechnologyGrid />
+
+        <div className={styles.content}>
+          <OrbitalSystem />
+        </div>
 
         <footer className={styles.footer}>
           <span>END OF TECHNICAL INVENTORY</span>
