@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 
-import { TECHNICAL_INVENTORY, TECH_LOGOS, TechnologyCategory } from './technical-data';
+import { TECHNICAL_INVENTORY, TECH_LOGOS } from './technical-data';
 
 export default function TechnologySatellites() {
   const meshRef = useRef<THREE.Group>(null);
@@ -15,11 +15,12 @@ export default function TechnologySatellites() {
     }
   });
 
-  const ALL_TECHNOLOGIES = TECHNICAL_INVENTORY.flatMap((cat: TechnologyCategory) =>
-    cat.technologies.map((tech: string) => ({
+  const ALL_TECHNOLOGIES = TECHNICAL_INVENTORY.flatMap((cat) =>
+    cat.technologies.map((tech) => ({
       name: tech,
       logoUrl: TECH_LOGOS[tech],
       color: cat.color,
+      category: cat.identifier,
     }))
   );
 
@@ -34,7 +35,7 @@ export default function TechnologySatellites() {
 
         return (
           <mesh
-            key={tech.name}
+            key={`${tech.category}-${tech.name}`}
             position={[x, y, z]}
           >
             <planeGeometry args={[10, 10]} />
