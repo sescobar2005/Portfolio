@@ -3,6 +3,7 @@ import styles from './contact.module.css';
 import ContactHeader from './header/contact-header';
 import ContactContent from './content/contact-content';
 import TransmissionDecoration from './decoration/transmission-decoration';
+import { SectionReveal } from '@/components/common/section-reveal';
 
 export default function Contact() {
   return (
@@ -10,14 +11,16 @@ export default function Contact() {
       <TransmissionDecoration />
 
       <div className={styles.container}>
-        <ContactHeader />
-        <ContactContent />
+        <SectionReveal>
+          <ContactHeader />
+          <ContactContent />
 
-        <footer className={styles.footer}>
-          <span>END OF TRANSMISSION</span>
-          <span>DESIGNED & BUILT BY SANTIAGO ESCOBAR</span>
-          <span>© 2026 / ALL SYSTEMS OPERATIONAL</span>
-        </footer>
+          <footer className={styles.footer}>
+            <span>END OF TRANSMISSION</span>
+            <span>DESIGNED & BUILT BY SANTIAGO ESCOBAR</span>
+            <span>© 2026 / ALL SYSTEMS OPERATIONAL</span>
+          </footer>
+        </SectionReveal>
       </div>
     </section>
   );
