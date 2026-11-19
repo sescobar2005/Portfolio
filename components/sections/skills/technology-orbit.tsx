@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, type CSSProperties } from 'react';
+import { useRef, useState, type CSSProperties } from 'react';
 import {
   AnimatePresence,
   motion,
+  useAnimationFrame,
+  useInView,
+  useMotionValue,
   useReducedMotion,
-  useTime,
   useTransform,
 } from 'motion/react';
 
@@ -111,19 +113,33 @@ const ORBIT_DURATION = 28_000;
 
 export default function TechnologyOrbit() {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+
   const shouldReduceMotion = useReducedMotion();
 
-  const time = useTime();
+  const orbitRef = useRef<HTMLDivElement>(null);
 
-  const orbitRotation = useTransform(
-    time,
-    (latest) => (latest / ORBIT_DURATION) * 360,
-  );
+  const isOrbitVisible = useInView(orbitRef, {
+    amount: 0.1,
+  });
 
+  // One shared rotation value for the orbit and its logos.
+  const orbitRotation = useMotionValue(0);
+
+  // Every logo receives the exact inverse rotation.
   const counterRotation = useTransform(
-    time,
-    (latest) => -(latest / ORBIT_DURATION) * 360,
+    orbitRotation,
+    (rotation) => -rotation,
   );
+
+  // Advance the orbit only while it is visible and motion is allowed.
+  useAnimationFrame((_, delta) => {
+    if (shouldReduceMotion || !isOrbitVisible) return;
+
+    const nextRotation =
+      (orbitRotation.get() + (delta / ORBIT_DURATION) * 360) % 360;
+
+    orbitRotation.set(nextRotation);
+  });
 
   const activeCategory = categories[activeCategoryIndex];
 
@@ -166,6 +182,7 @@ export default function TechnologyOrbit() {
         </nav>
 
         <div
+          ref={orbitRef}
           className={styles.orbitVisualization}
           aria-label={`${activeCategory.label} technologies`}
         >
@@ -178,7 +195,7 @@ export default function TechnologyOrbit() {
           <motion.div
             className={styles.orbitTrack}
             style={{
-              rotate: shouldReduceMotion ? 0 : orbitRotation,
+              rotate: orbitRotation,
             }}
           >
             <AnimatePresence mode="wait" initial={false}>
@@ -217,7 +234,7 @@ export default function TechnologyOrbit() {
                         <motion.div
                           className={styles.satelliteCounter}
                           style={{
-                            rotate: shouldReduceMotion ? 0 : counterRotation,
+                            rotate: counterRotation,
                           }}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
