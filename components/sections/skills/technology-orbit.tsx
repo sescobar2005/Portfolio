@@ -1,41 +1,142 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, type CSSProperties } from 'react';
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useTime,
+  useTransform,
+} from 'motion/react';
 
 import styles from './technology-orbit.module.css';
 
-const categories = [
+interface Technology {
+  name: string;
+  icon: string;
+}
+
+interface Category {
+  id: string;
+  label: string;
+  technologies: Technology[];
+}
+
+const categories: Category[] = [
   {
     id: 'backend',
     label: 'Backend',
-    technologies: ['Java', 'Node.js', 'NestJS'],
+    technologies: [
+      {
+        name: 'Node.js',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg',
+      },
+      {
+        name: 'NestJS',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg',
+      },
+      {
+        name: 'TypeScript',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg',
+      },
+      {
+        name: 'JavaScript',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+      },
+    ],
   },
   {
     id: 'frontend',
     label: 'Frontend',
-    technologies: ['JavaScript', 'TypeScript', 'React', 'Next.js'],
+    technologies: [
+      {
+        name: 'Angular',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg',
+      },
+    ],
   },
   {
-    id: 'database',
-    label: 'Database',
-    technologies: ['PostgreSQL', 'Prisma ORM'],
+    id: 'databases',
+    label: 'Databases and ORM',
+    technologies: [
+      {
+        name: 'PostgreSQL',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original-wordmark.svg',
+      },
+      {
+        name: 'Prisma',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prisma/prisma-original.svg',
+      },
+    ],
+  },
+  {
+    id: 'programming-data',
+    label: 'Programming and data',
+    technologies: [
+      {
+        name: 'Python',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original-wordmark.svg',
+      },
+      {
+        name: 'Java',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg',
+      },
+      {
+        name: 'Pandas',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg',
+      },
+      {
+        name: 'NumPy',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg',
+      },
+    ],
   },
   {
     id: 'tools',
-    label: 'Tools',
-    technologies: ['Git', 'GitHub', 'Vitest', 'npm'],
+    label: 'Tools and version control',
+    technologies: [
+      {
+        name: 'Git',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original-wordmark.svg',
+      },
+      {
+        name: 'GitHub',
+        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg',
+      },
+    ],
   },
 ];
 
+const ORBIT_DURATION = 28_000;
+
 export default function TechnologyOrbit() {
   const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
+
+  const time = useTime();
+
+  const orbitRotation = useTransform(
+    time,
+    (latest) => (latest / ORBIT_DURATION) * 360,
+  );
+
+  const counterRotation = useTransform(
+    time,
+    (latest) => -(latest / ORBIT_DURATION) * 360,
+  );
 
   const activeCategory = categories[activeCategoryIndex];
+
+  const transition = {
+    duration: shouldReduceMotion ? 0 : 0.45,
+    ease: [0.22, 1, 0.36, 1] as const,
+  };
 
   return (
     <section className={styles.orbitSection}>
       <header className={styles.header}>
-        <h1 className={styles.title}>TECHNOLOGY LAB</h1>
+        <h2 className={styles.title}>TECHNOLOGY LAB</h2>
+
         <p className={styles.subtitle}>
           Technologies, tools and concepts I use to design,
           develop and bring software solutions to life.
@@ -43,10 +144,15 @@ export default function TechnologyOrbit() {
       </header>
 
       <div className={styles.orbitWrapper}>
-        <div className={styles.categorySelector}>
+        <nav
+          className={styles.categorySelector}
+          aria-label="Technology categories"
+        >
           {categories.map((category, index) => (
             <button
               key={category.id}
+              type="button"
+              aria-pressed={activeCategoryIndex === index}
               className={`${styles.categoryButton} ${
                 activeCategoryIndex === index
                   ? styles.categoryButtonActive
@@ -57,35 +163,82 @@ export default function TechnologyOrbit() {
               {category.label}
             </button>
           ))}
-        </div>
+        </nav>
 
-        <div className={styles.orbitVisualization}>
+        <div
+          className={styles.orbitVisualization}
+          aria-label={`${activeCategory.label} technologies`}
+        >
           <div className={styles.orbitRing} />
-          <div className={styles.orbitGroup}>
-            {activeCategory.technologies.map((tech, index) => {
-              const angleDeg = (index / activeCategory.technologies.length) * 360;
-              const angleRad = (angleDeg * Math.PI) / 180;
-              const x = Math.round(Math.cos(angleRad) * 140);
-              const y = Math.round(Math.sin(angleRad) * 140 * 0.5);
 
-              return (
-              <div
-                  key={tech}
-                  className={styles.satelliteContainer}
-                  style={{
-                    '--angle': `${angleDeg}deg`,
-                    left: `calc(50% + ${x}px)`,
-                    top: `calc(50% + ${y}px)`,
-                  } as React.CSSProperties}
-                >
-                  <div className={styles.satelliteContent}>
-                    <div className={styles.orbitDot} />
-                    <span className={styles.techLabel}>{tech}</span>
-                  </div>
-                </div>
-              );
-            })}
+          <div className={styles.orbitCenter}>
+            <span>TECH</span>
           </div>
+
+          <motion.div
+            className={styles.orbitTrack}
+            style={{
+              rotate: shouldReduceMotion ? 0 : orbitRotation,
+            }}
+          >
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeCategory.id}
+                className={styles.orbitCategoryLayer}
+                initial={
+                  shouldReduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, scale: 0.88 }
+                }
+                animate={{ opacity: 1, scale: 1 }}
+                exit={
+                  shouldReduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, scale: 0.88 }
+                }
+                transition={transition}
+              >
+                {activeCategory.technologies.map((technology, index) => {
+                  const angle =
+                    (index / activeCategory.technologies.length) * 360 - 90;
+
+                  const satelliteStyle = {
+                    '--angle': `${angle}deg`,
+                    '--counter-angle': `${-angle}deg`,
+                  } as CSSProperties;
+
+                  return (
+                    <div
+                      key={technology.name}
+                      className={styles.satellitePosition}
+                      style={satelliteStyle}
+                    >
+                      <div className={styles.satelliteContent}>
+                        <motion.div
+                          className={styles.satelliteCounter}
+                          style={{
+                            rotate: shouldReduceMotion ? 0 : counterRotation,
+                          }}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            className={styles.technologyLogo}
+                            src={technology.icon}
+                            alt={technology.name}
+                            title={technology.name}
+                            width={60}
+                            height={60}
+                            loading="lazy"
+                            draggable={false}
+                          />
+                        </motion.div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
         </div>
       </div>
     </section>
