@@ -5,7 +5,7 @@ export default function ContactHeader() {
     <header className={styles.header}>
       <p className={styles.eyebrow}>
         <span className={styles.statusDot} />
-        04 / TRANSMISSION CHANNEL
+        04 / LET'S CONNECT
       </p>
 
       <h2 className={styles.title}>
@@ -14,14 +14,9 @@ export default function ContactHeader() {
       </h2>
 
       <p className={styles.subtitle}>
-        Every great system starts with a conversation.
-        Let's connect and explore what we can build together.
+        Every great idea starts with a conversation.
+        Let's connect and see what we can build together.
       </p>
-
-      <div className={styles.metadata}>
-        <span>COMMUNICATION SYSTEM</span>
-        <span>CHANNEL STATUS: ONLINE</span>
-      </div>
     </header>
   );
 }
