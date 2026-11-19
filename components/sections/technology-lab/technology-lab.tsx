@@ -5,21 +5,23 @@ import PersonalIntroduction from './introduction/personal-introduction';
 import InformationGrid from './information/information-grid';
 import LabDecoration from './decoration/lab-decoration';
 import LabFooter from './footer/lab-footer';
-
+import { SectionReveal } from '@/components/common/section-reveal';
 export default function TechnologyLab() {
   return (
     <section id="about" className={styles.technologyLab}>
       <LabDecoration />
 
       <div className={styles.container}>
-        <TechnologyLabHeader />
+        <SectionReveal>
+          <TechnologyLabHeader />
 
-        <div className={styles.content}>
-          <PersonalIntroduction />
-          <InformationGrid />
-        </div>
+          <div className={styles.content}>
+            <PersonalIntroduction />
+            <InformationGrid />
+          </div>
 
-        <LabFooter />
+          <LabFooter />
+        </SectionReveal>
       </div>
     </section>
   );
