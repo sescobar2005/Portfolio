@@ -62,6 +62,16 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    // Prevent the browser from restoring scroll position on reload.
+    // Always start from the top so the Hero is the first thing seen.
+    history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
+    // Ensure the URL starts at the root without any section hash.
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname);
+    }
+
     const initialHash = window.location.hash.slice(1);
     if (initialHash && SECTION_IDS.includes(initialHash)) {
       const element = document.getElementById(initialHash);
