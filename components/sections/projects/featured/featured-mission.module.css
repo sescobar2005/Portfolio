@@ -1,0 +1,302 @@
+.featured {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+
+  min-height: 440px;
+  margin-bottom: 0;
+
+  overflow: hidden;
+
+  border: none;
+  border-radius: inherit;
+
+  background: transparent;
+
+  isolation: isolate;
+}
+
+/* VISUAL AREA */
+
+.visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  min-height: 440px;
+  overflow: hidden;
+
+  border-right: 1px solid rgba(125, 166, 210, 0.12);
+
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(57, 139, 255, 0.13),
+      transparent 55%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(10, 25, 46, 0.7),
+      rgba(5, 12, 25, 0.95)
+    );
+}
+
+.visualGrid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(125, 166, 210, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 166, 210, 0.045) 1px, transparent 1px);
+
+  background-size: 42px 42px;
+
+  mask-image: radial-gradient(
+    ellipse at center,
+    black,
+    transparent 78%
+  );
+}
+
+/* ORBITAL STRUCTURE */
+
+.orbit {
+  position: absolute;
+
+  border: 1px solid rgba(91, 160, 235, 0.2);
+  border-radius: 50%;
+
+  transform: rotate(-28deg);
+}
+
+.orbitOne {
+  width: 230px;
+  height: 230px;
+}
+
+.orbitTwo {
+  width: 330px;
+  height: 150px;
+
+  border-color: rgba(89, 199, 232, 0.24);
+
+  transform: rotate(42deg);
+}
+
+.orbitThree {
+  width: 390px;
+  height: 250px;
+
+  border-color: rgba(91, 160, 235, 0.1);
+
+  transform: rotate(-55deg);
+}
+
+/* CENTRAL OBJECT */
+
+.visualCore {
+  position: relative;
+  display: grid;
+  place-items: center;
+
+  width: 110px;
+  height: 110px;
+}
+
+.coreRing {
+  position: absolute;
+  inset: 0;
+
+  border: 1px solid rgba(89, 199, 232, 0.45);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 35px rgba(57, 139, 255, 0.12),
+    inset 0 0 25px rgba(57, 139, 255, 0.08);
+}
+
+.core {
+  width: 28px;
+  height: 28px;
+
+  border: 1px solid rgba(147, 197, 253, 0.8);
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(103, 232, 249, 0.9),
+    rgba(57, 139, 255, 0.25) 65%,
+    transparent
+  );
+
+  box-shadow: 0 0 30px rgba(57, 139, 255, 0.4);
+}
+
+/* VISUAL METADATA */
+
+.visualLabel,
+.coordinates {
+  position: absolute;
+
+  color: #7187a5;
+
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+}
+
+.visualLabel {
+  top: 1.5rem;
+  left: 1.5rem;
+}
+
+.coordinates {
+  right: 1.5rem;
+  bottom: 1.5rem;
+
+  line-height: 1.8;
+  text-align: right;
+}
+
+/* CONTENT */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: clamp(2rem, 4vw, 3.5rem);
+}
+
+.topline,
+.bottomline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.missionId,
+.bottomline {
+  color: #7187a5;
+
+  font-size: 0.62rem;
+  letter-spacing: 0.13em;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+
+  color: #8ba6c7;
+
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+}
+
+.status span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #59c7e8;
+  box-shadow: 0 0 10px rgba(89, 199, 232, 0.6);
+}
+
+.description {
+  margin: 3rem 0;
+}
+
+.eyebrow {
+  color: #60a5fa;
+
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+}
+
+.description h3 {
+  margin-top: 1.2rem;
+
+  color: #e8eef8;
+
+  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-weight: 650;
+  letter-spacing: -0.06em;
+  line-height: 1.08;
+}
+
+.description h3 span {
+  color: #93bdf0;
+}
+
+.description p {
+  max-width: 390px;
+
+  margin-top: 1.4rem;
+
+  color: #8999b2;
+
+  font-size: 0.9rem;
+  line-height: 1.85;
+}
+
+.bottomline {
+  padding-top: 1.25rem;
+
+  border-top: 1px solid rgba(125, 166, 210, 0.12);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+  .featured {
+    grid-template-columns: 1fr;
+  }
+
+  .visual {
+    min-height: 340px;
+
+    border-right: none;
+    border-bottom: 1px solid rgba(125, 166, 210, 0.12);
+  }
+
+  .content {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 550px) {
+  .visual {
+    min-height: 280px;
+  }
+
+  .orbitThree {
+    width: 320px;
+    height: 210px;
+  }
+
+  .content {
+    min-height: 380px;
+    padding: 1.5rem;
+  }
+
+  .topline,
+  .bottomline {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .description {
+    margin: 2.5rem 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured,
+  .visual,
+  .core {
+    transition: none;
+  }
+}

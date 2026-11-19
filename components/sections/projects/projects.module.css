@@ -9,15 +9,25 @@
 
   background:
     radial-gradient(
-      ellipse at 90% 40%,
-      rgba(30, 64, 175, 0.1),
-      transparent 45%
+      ellipse 65% 48% at 82% 28%,
+      rgba(37, 99, 180, 0.105),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 48% 42% at 12% 82%,
+      rgba(91, 55, 150, 0.075),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 85% 65% at 50% 50%,
+      rgba(14, 35, 63, 0.25),
+      transparent 80%
     ),
     linear-gradient(
       180deg,
-      #080f20 0%,
-      #0b1426 50%,
-      #080f20 100%
+      #070d19 0%,
+      #091323 48%,
+      #070d19 100%
     );
 }
 

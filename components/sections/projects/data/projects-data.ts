@@ -7,6 +7,7 @@ export interface Project {
   technologies: string[];
   status: 'Completed' | 'In Progress' | 'Planning';
   featured: boolean;
+  isMock?: boolean;
   githubUrl?: string;
   liveUrl?: string;
 }

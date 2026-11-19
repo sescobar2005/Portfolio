@@ -1,8 +1,14 @@
-import projects from '../data/projects-data';
+import type { Project } from '../data/projects-data';
 import ExpeditionCard from './expedition-card';
 import styles from './expedition-grid.module.css';
 
-export default function ExpeditionGrid() {
+interface ExpeditionGridProps {
+  projects: Project[];
+}
+
+export default function ExpeditionGrid({
+  projects,
+}: ExpeditionGridProps) {
   if (projects.length === 0) {
     return (
       <div className={styles.emptyState}>

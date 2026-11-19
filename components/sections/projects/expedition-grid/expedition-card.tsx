@@ -31,6 +31,7 @@ export default function ExpeditionCard({
       <div className={styles.cardContent}>
         <p className={styles.category}>
           {project.category}
+          {project.isMock && ' / MOCK PREVIEW'}
         </p>
 
         <h3 className={styles.projectName}>

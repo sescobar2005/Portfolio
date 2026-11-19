@@ -1,8 +1,10 @@
 import styles from './projects.module.css';
 
 import ProjectsHeader from './header/projects-header';
-import ExpeditionGrid from './expedition-grid/expedition-grid';
+import MissionControl from './mission-control/mission-control';
 import ExpeditionDecoration from './decoration/expedition-decoration';
+
+import mockProjects from './data/projects-mock-data';
 
 export default function Projects() {
   return (
@@ -12,7 +14,7 @@ export default function Projects() {
       <div className={styles.container}>
         <ProjectsHeader />
 
-        <ExpeditionGrid />
+        <MissionControl projects={mockProjects} />
 
         <footer className={styles.footer}>
           <span>END OF EXPEDITION LOG</span>

@@ -1,0 +1,383 @@
+.missionControl {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* SHARED PROJECT SURFACE */
+
+.panelStage {
+  position: relative;
+  width: 100%;
+  isolation: isolate;
+}
+
+.missionPanel {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  overflow: hidden;
+
+  border: 1px solid rgba(125, 166, 210, 0.15);
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      115deg,
+      rgba(15, 28, 48, 0.96),
+      rgba(8, 17, 32, 0.94)
+    );
+
+  isolation: isolate;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+.missionArtifact {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  overflow: hidden;
+}
+
+/* PROJECT SELECTOR */
+
+.selector {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.selectorHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  padding-bottom: 0.85rem;
+
+  border-bottom: 1px solid rgba(125, 166, 210, 0.12);
+}
+
+.selectorLabel,
+.selectorCount {
+  color: #7187a5;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+
+.selectorCount {
+  color: #526783;
+}
+
+.missionList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+/* MISSION BUTTON */
+
+.missionButton {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+
+  min-width: 0;
+  min-height: 58px;
+  padding: 1rem 1.1rem;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(125, 166, 210, 0.12);
+  border-radius: 8px;
+
+  background: rgba(12, 25, 44, 0.55);
+  color: #8999b2;
+
+  text-align: left;
+  cursor: pointer;
+
+  isolation: isolate;
+
+  transition:
+    border-color 220ms ease,
+    color 220ms ease,
+    background 220ms ease;
+}
+
+.missionButton:hover {
+  border-color: rgba(96, 165, 250, 0.35);
+  color: #dbeafe;
+}
+
+.missionButton:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 4px;
+}
+
+.missionButtonSurface {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  border-radius: inherit;
+
+  background: linear-gradient(
+    110deg,
+    rgba(37, 75, 119, 0.38),
+    rgba(17, 34, 57, 0.9)
+  );
+
+  pointer-events: none;
+}
+
+/* SELECTED BUTTON */
+
+.selected {
+  border-color: rgba(96, 165, 250, 0.55);
+  background: rgba(17, 34, 57, 0.42);
+  color: #e8eef8;
+}
+
+.selected::before {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  width: 2px;
+  height: 100%;
+
+  background: #60a5fa;
+  content: '';
+}
+
+.selected .missionNumber {
+  color: #93c5fd;
+}
+
+/* FOLDER GLYPH */
+
+.folderGlyph {
+  position: relative;
+  flex-shrink: 0;
+
+  width: 17px;
+  height: 12px;
+
+  border: 1px solid rgba(125, 166, 210, 0.45);
+  border-radius: 2px;
+
+  background: rgba(96, 165, 250, 0.08);
+
+  transition:
+    border-color 220ms ease,
+    background 220ms ease;
+}
+
+.folderGlyph::before {
+  position: absolute;
+  top: -4px;
+  left: 1px;
+
+  width: 7px;
+  height: 4px;
+
+  border: 1px solid rgba(125, 166, 210, 0.45);
+  border-bottom: none;
+  border-radius: 2px 2px 0 0;
+
+  background: rgba(12, 25, 44, 0.9);
+  content: '';
+}
+
+.folderGlyph span {
+  position: absolute;
+  inset: 3px 2px 2px;
+
+  border-radius: 1px;
+  background: rgba(96, 165, 250, 0.12);
+}
+
+.selected .folderGlyph {
+  border-color: rgba(147, 197, 253, 0.8);
+  background: rgba(96, 165, 250, 0.2);
+}
+
+.selected .folderGlyph::before {
+  border-color: rgba(147, 197, 253, 0.8);
+}
+
+.selected .folderGlyph span {
+  background: rgba(147, 197, 253, 0.25);
+}
+
+/* SAVED PROJECT FILE */
+
+.savedFile {
+  position: relative;
+  z-index: 1;
+
+  display: block;
+  flex-shrink: 0;
+
+  width: 15px;
+  height: 19px;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(147, 197, 253, 0.65);
+  border-radius: 2px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(96, 165, 250, 0.28),
+    rgba(37, 75, 119, 0.2)
+  );
+
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.12);
+}
+
+.savedFileFold {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+
+  width: 6px;
+  height: 6px;
+
+  border-left: 1px solid rgba(147, 197, 253, 0.65);
+  border-bottom: 1px solid rgba(147, 197, 253, 0.65);
+
+  background: rgba(12, 25, 44, 0.95);
+}
+
+.savedFileLines {
+  position: absolute;
+  right: 2px;
+  bottom: 3px;
+  left: 2px;
+
+  height: 5px;
+
+  border-top: 1px solid rgba(191, 219, 254, 0.65);
+  border-bottom: 1px solid rgba(191, 219, 254, 0.4);
+}
+
+/* BUTTON CONTENT */
+
+.missionNumber {
+  position: relative;
+  z-index: 1;
+
+  flex-shrink: 0;
+
+  color: #526783;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.missionName {
+  position: relative;
+  z-index: 1;
+
+  min-width: 0;
+  overflow: hidden;
+
+  color: inherit;
+  font-size: 0.82rem;
+  font-weight: 550;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.missionIndicator {
+  position: relative;
+  z-index: 1;
+
+  margin-left: auto;
+
+  color: #60a5fa;
+  font-size: 0.52rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+
+  opacity: 0;
+
+  transition: opacity 220ms ease;
+}
+
+.selected .missionIndicator,
+.missionButton:hover .missionIndicator {
+  opacity: 1;
+}
+
+/* EMPTY STATE */
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+
+  padding: 4rem 2rem;
+
+  border: 1px solid rgba(125, 166, 210, 0.12);
+  border-radius: 12px;
+
+  color: #8999b2;
+  text-align: center;
+}
+
+.emptyCode {
+  color: #60a5fa;
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 850px) {
+  .missionList {
+    grid-template-columns: 1fr;
+  }
+
+  .missionButton {
+    min-height: 58px;
+  }
+
+  .missionIndicator {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .selectorHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .missionButton {
+    padding: 0.9rem;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .missionButton,
+  .missionIndicator,
+  .folderGlyph,
+  .folderGlyph::before {
+    transition: none;
+  }
+}
