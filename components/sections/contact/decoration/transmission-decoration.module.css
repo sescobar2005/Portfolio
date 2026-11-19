@@ -104,31 +104,6 @@
   filter: blur(12px);
 }
 
-/* HORIZON LIGHT */
-
-.horizonLine {
-  position: absolute;
-  right: -10%;
-  bottom: 15%;
-
-  width: 120%;
-  height: 1px;
-
-  background: linear-gradient(
-    90deg,
-    transparent 2%,
-    rgba(76, 132, 197, 0.08) 18%,
-    rgba(111, 160, 218, 0.48) 48%,
-    rgba(129, 111, 186, 0.35) 68%,
-    rgba(76, 132, 197, 0.08) 88%,
-    transparent
-  );
-
-  box-shadow:
-    0 0 12px rgba(76, 132, 197, 0.13),
-    0 0 35px rgba(76, 132, 197, 0.09);
-}
-
 /* RESPONSIVE */
 
 @media (max-width: 768px) {
