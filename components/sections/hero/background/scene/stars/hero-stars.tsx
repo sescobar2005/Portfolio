@@ -6,7 +6,7 @@ import * as THREE from 'three';
 const stars = [
   { position: [-7.2, 2.8, -5.5], size: 4.2, color: '#dbeafe' },
   { position: [6.5, 2.1, -7.0], size: 5.0, color: '#b9e8ff' },
-  { position: [-3.5, -2.5, -8.0], size: 3.5, color: '#ffffff' },
+  { position: [7, 5, -6], size: 3.5, color: '#ffffff' },
   { position: [2.8, 3.8, -10.0], size: 5.5, color: '#c4d2ff' },
   { position: [8.0, -2.8, -8.0], size: 4.0, color: '#d5f5ff' },
   { position: [-8.5, -1.8, -9.0], size: 3.8, color: '#ffffff' },
