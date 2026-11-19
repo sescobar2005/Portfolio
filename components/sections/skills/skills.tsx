@@ -1,6 +1,7 @@
 import styles from './skills.module.css';
 import SkillsHeader from './header/skills-header';
 import TechnologyOrbit from './technology-orbit';
+import { SectionReveal } from '@/components/common/section-reveal';
 
 export default function Skills() {
   return (
@@ -13,8 +14,10 @@ export default function Skills() {
       </div>
 
       <div className={styles.container}>
-        <SkillsHeader />
-        <TechnologyOrbit />
+        <SectionReveal>
+          <SkillsHeader />
+          <TechnologyOrbit />
+        </SectionReveal>
       </div>
     </section>
   );
