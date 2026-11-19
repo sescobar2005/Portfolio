@@ -8,7 +8,7 @@ import LabFooter from './footer/lab-footer';
 
 export default function TechnologyLab() {
   return (
-    <section id="technology-lab" className={styles.technologyLab}>
+    <section id="about" className={styles.technologyLab}>
       <LabDecoration />
 
       <div className={styles.container}>
