@@ -1,6 +1,13 @@
 .header {
-  max-width: 800px;
-  margin-bottom: 5rem;
+  position: relative;
+
+  width: 100%;
+  max-width: 760px;
+
+  margin: auto auto 4rem;
+  padding-top: 3rem;
+
+  text-align: center;
 }
 
 /* EYEBROW */
@@ -9,15 +16,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 0.7rem;
 
   margin-bottom: 1.75rem;
 
   color: #59c7e8;
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.2em;
 }
+
+/* STATUS DOT */
 
 .statusDot {
   width: 7px;
@@ -32,43 +41,28 @@
 /* TITLE */
 
 .title {
+  display: flex;
+  flex-direction: column;
+
   color: #e8eef8;
 
-  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  font-size: clamp(2.7rem, 6vw, 5rem);
   font-weight: 700;
-
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-
-  margin: 0;
+  line-height: 1.04;
+  letter-spacing: -0.065em;
 }
 
 /* SUBTITLE */
 
 .subtitle {
-  max-width: 600px;
-  margin-top: 1.5rem;
+  max-width: 520px;
+
+  margin: 1.5rem auto 0;
 
   color: #8999b2;
-  font-size: 1rem;
+
+  font-size: 0.95rem;
   line-height: 1.8;
-}
-
-/* METADATA */
-
-.metadata {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-
-  margin-top: 2.5rem;
-  padding-top: 1.5rem;
-
-  border-top: 1px solid rgba(125, 166, 210, 0.16);
-
-  color: #526782;
-  font-size: 0.65rem;
-  letter-spacing: 0.13em;
 }
 
 /* RESPONSIVE */
@@ -76,11 +70,15 @@
 @media (max-width: 600px) {
   .header {
     margin-bottom: 3rem;
+    padding-top: 2rem;
   }
 
-  .metadata {
-    flex-direction: column;
-    gap: 0.75rem;
+  .title {
+    font-size: clamp(2.5rem, 11vw, 3.5rem);
+  }
+
+  .subtitle {
+    font-size: 0.88rem;
   }
 }
 

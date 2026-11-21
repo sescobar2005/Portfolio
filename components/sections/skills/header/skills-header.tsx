@@ -7,6 +7,15 @@ export default function SkillsHeader() {
         <span className={styles.statusDot} />
         02 / TECHNOLOGY LAB
       </p>
+
+      <h2 className={styles.title}>
+        TECHNOLOGY LAB
+      </h2>
+
+      <p className={styles.subtitle}>
+        Technologies, tools and concepts I use to design,
+        develop and bring software solutions to life.
+      </p>
     </header>
   );
 }
