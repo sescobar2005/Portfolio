@@ -5,7 +5,7 @@ import MissionControl from './mission-control/mission-control';
 import ExpeditionDecoration from './decoration/expedition-decoration';
 import { SectionReveal } from '@/components/common/section-reveal';
 
-import mockProjects from './data/projects-mock-data';
+import projects from './data/projects-data';
 
 export default function Projects() {
   return (
@@ -16,7 +16,7 @@ export default function Projects() {
         <SectionReveal>
           <ProjectsHeader />
 
-          <MissionControl projects={mockProjects} />
+          <MissionControl projects={projects} />
 
           <footer className={styles.footer}>
             <span>END OF EXPEDITION LOG</span>
