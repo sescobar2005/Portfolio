@@ -9,7 +9,7 @@ export default function SkillsHeader() {
       </p>
 
       <h2 className={styles.title}>
-        TECHNOLOGY LAB
+        ENGINEERING EXPERTISE
       </h2>
 
       <p className={styles.subtitle}>
