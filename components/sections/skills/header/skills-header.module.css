@@ -52,6 +52,10 @@
   letter-spacing: -0.065em;
 }
 
+.title span {
+  color: #91a9ca;
+}
+
 /* SUBTITLE */
 
 .subtitle {
