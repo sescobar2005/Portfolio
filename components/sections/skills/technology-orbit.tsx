@@ -150,9 +150,6 @@ export default function TechnologyOrbit() {
 
   return (
     <section className={styles.orbitSection}>
-      <header className={styles.header}>
-        <h2 className={styles.title}>TECHNOLOGY LAB</h2>
-      </header>
 
       <div className={styles.orbitWrapper}>
         <nav
