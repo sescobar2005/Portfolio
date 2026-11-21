@@ -18,7 +18,7 @@ export default function StarField() {
 
       {/* Mid-distance stars */}
       <StarParticles
-        position={[0, 0, -5]}
+        position={[0, 0, -20]}
         scale={[30, 18, 8]}
         count={260}
         size={2}
