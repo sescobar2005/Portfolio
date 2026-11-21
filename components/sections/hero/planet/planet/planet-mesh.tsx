@@ -46,7 +46,7 @@ export default function PlanetMesh({
   return (
     <mesh
       ref={planet}
-      renderOrder={0}
+      renderOrder={-1}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
