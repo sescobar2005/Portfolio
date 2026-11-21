@@ -9,8 +9,8 @@ export default function SkillsHeader() {
       </p>
 
       <h2 className={styles.title}>
-        ENGINEERING
-        <span>EXPERTISE</span>
+        Engineering
+        <span>Expertise</span>
       </h2>
 
       <p className={styles.subtitle}>
