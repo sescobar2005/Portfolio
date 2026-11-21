@@ -12,17 +12,6 @@ export default function ProjectsHeader() {
         Systems
         <span> built beyond ideas.</span>
       </h2>
-
-      <p className={styles.subtitle}>
-        A collection of projects, experiments and engineering
-        challenges where ideas become functional software
-        solutions.
-      </p>
-
-      <div className={styles.metadata}>
-        <span>MISSION ARCHIVE</span>
-        <span>PROJECT DATABASE / 001</span>
-      </div>
     </header>
   );
 }
