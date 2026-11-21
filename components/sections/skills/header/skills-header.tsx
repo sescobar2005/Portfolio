@@ -7,20 +7,6 @@ export default function SkillsHeader() {
         <span className={styles.statusDot} />
         02 / TECHNOLOGY LAB
       </p>
-
-      <h1 className={styles.title}>
-        The tools behind the systems.
-      </h1>
-
-      <p className={styles.subtitle}>
-        Technologies, tools and concepts I use to design,
-        develop and bring software solutions to life.
-      </p>
-
-      <div className={styles.metadata}>
-        <span>TECHNICAL INVENTORY</span>
-        <span>KNOWLEDGE DATABASE / 001</span>
-      </div>
     </header>
   );
 }
