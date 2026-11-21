@@ -8,7 +8,7 @@ export default function TechnicalOrbitCard() {
         <span className={styles.cardSymbol}>⌘</span>
       </div>
 
-      <h3 className={styles.cardTitle}>TECHNICAL ORBIT</h3>
+      <h3 className={styles.cardTitle}>CORE COMPETENCIES</h3>
 
       <p className={styles.cardDescription}>
         Focused on backend development, application architecture,
