@@ -17,7 +17,6 @@ export default function Contact() {
 
           <footer className={styles.footer}>
             <span>END OF TRANSMISSION</span>
-            <span>DESIGNED & BUILT BY SANTIAGO ESCOBAR</span>
             <span>© 2026 / ALL SYSTEMS OPERATIONAL</span>
           </footer>
         </SectionReveal>
