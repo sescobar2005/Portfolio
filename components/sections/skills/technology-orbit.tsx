@@ -152,11 +152,6 @@ export default function TechnologyOrbit() {
     <section className={styles.orbitSection}>
       <header className={styles.header}>
         <h2 className={styles.title}>TECHNOLOGY LAB</h2>
-
-        <p className={styles.subtitle}>
-          Technologies, tools and concepts I use to design,
-          develop and bring software solutions to life.
-        </p>
       </header>
 
       <div className={styles.orbitWrapper}>
